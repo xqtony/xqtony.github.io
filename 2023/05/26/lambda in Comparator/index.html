@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Lambda中比较器Comparator的使用 | 托尼的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="托尼的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">托尼的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/about"><i class="fa fa-user"></i> 关于</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-lambda in Comparator" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Lambda中比较器Comparator的使用
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-05-25T22:15:31.551Z" itemprop="datePublished">05/26/2023</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/">Java高级特性和类库</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2023/05/26/lambda%20in%20Comparator/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>如果你赶时间：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.sort((Developer o1, Developer o2) -&gt; Integer.compare(o1.getAge(), o2.getAge()));   <span class="comment">// 显式类型</span></span><br><span class="line">listDevs.sort((o1, o2) -&gt; Integer.compare(o1.getAge(), o2.getAge()));                   <span class="comment">// 隐式类型，效果一致</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h1><p>先来看下典型的比较器示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Developer&gt; byName = <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getName().compareTo(o2.getName()); <span class="comment">// name是String类型</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Java8</code>中引入了<code>Lambda</code>表达式，比较器可以改成下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Developer&gt; byName = (Developer o1, Developer o2) -&gt; o1.getName().compareTo(o2.getName());</span><br></pre></td></tr></table></figure>
+
+<p>对于<em>数组</em>，<code>Arrays.sort()</code>提供了传入比较器的重载方法，对于<em>列表</em>，<code>Collections.sort()</code>也提供了传入比较器的重载方法。</p>
+<h1 id="二、使用实例"><a href="#二、使用实例" class="headerlink" title="二、使用实例"></a>二、使用实例</h1><h2 id="2-1-通过new-新建比较器"><a href="#2-1-通过new-新建比较器" class="headerlink" title="2.1 通过new 新建比较器"></a>2.1 通过<code>new</code> 新建比较器</h2><p>假如我们要通过Developer 对象的年龄进行排序，通常情况下我们使用Collections.sort，new个匿名Comparator 类，类似下面这种：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSorting</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;Developer&gt; listDevs = getDevelopers();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Before Sort&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Developer developer : listDevs) &#123;</span><br><span class="line">            System.out.println(developer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//sort by age</span></span><br><span class="line">        Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">                <span class="comment">// return o1.getAge() - o2.getAge();</span></span><br><span class="line">                <span class="keyword">return</span> Integer.compare(o1.getAge(), o2.getAge());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;After Sort&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Developer developer : listDevs) &#123;</span><br><span class="line">            System.out.println(developer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Developer&gt; <span class="title function_">getDevelopers</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;Developer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Developer&gt;();</span><br><span class="line"></span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;ricky&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;70000&quot;</span>), <span class="number">33</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;alvin&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;80000&quot;</span>), <span class="number">20</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;jason&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;100000&quot;</span>), <span class="number">10</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;iris&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;170000&quot;</span>), <span class="number">55</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Before Sort</span><br><span class="line">Developer [name=ricky, salary=70000, age=33]</span><br><span class="line">Developer [name=alvin, salary=80000, age=20]</span><br><span class="line">Developer [name=jason, salary=100000, age=10]</span><br><span class="line">Developer [name=iris, salary=170000, age=55]</span><br><span class="line"></span><br><span class="line">After Sort</span><br><span class="line">Developer [name=jason, salary=100000, age=10]</span><br><span class="line">Developer [name=alvin, salary=80000, age=20]</span><br><span class="line">Developer [name=ricky, salary=70000, age=33]</span><br><span class="line">Developer [name=iris, salary=170000, age=55]</span><br></pre></td></tr></table></figure>
+<p>当比较规则发生变化时，你需要再次new个匿名Comparator 类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sort by age</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="comment">// Tony updated: 尽管几乎不可能溢出，但存在这种可能性</span></span><br><span class="line">        <span class="comment">// return o1.getAge() - o2.getAge();</span></span><br><span class="line">        <span class="comment">// 参考这篇博客：https://xqtony.github.io/2023/05/26/compareTo/</span></span><br><span class="line">        <span class="comment">// 应该使用下面的实现方法：</span></span><br><span class="line">        <span class="keyword">return</span> Integer.compare(o1.getAget(), o2.getAge());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//sort by name</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getName().compareTo(o2.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//sort by salary</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getSalary().compareTo(o2.getSalary());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样也可以，不过你会不会觉得这样有点怪，因为其实不同的只有一行代码而已，但是却需要重复写很多代码？</p>
+<h2 id="2-2-通过Lambda表达式新建比较器"><a href="#2-2-通过Lambda表达式新建比较器" class="headerlink" title="2.2 通过Lambda表达式新建比较器"></a>2.2 通过Lambda表达式新建比较器</h2><p>在<code>java8</code>中，<code>List</code>接口直接提供了排序方法， 所以你不需要使用<code>Collections.sort：</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//List.sort() since Java 8</span></span><br><span class="line">listDevs.sort(<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="comment">// Tony：原文中存在两个问题：</span></span><br><span class="line">        <span class="comment">// 1. 溢出风险</span></span><br><span class="line">        <span class="comment">// 2. 顺序写反了</span></span><br><span class="line">        <span class="comment">// return o2.getAge() - o1.getAge();</span></span><br><span class="line">        <span class="comment">// Tony:</span></span><br><span class="line">        <span class="keyword">return</span> Integer.compare(o1.getAget(), o2.getAge());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>Lambda</code>改写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSorting</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;Developer&gt; listDevs = getDevelopers();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Before Sort&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (Developer developer : listDevs) &#123;</span><br><span class="line">            System.out.println(developer);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;After Sort&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Tony： 原文使用了下面的实现</span></span><br><span class="line">        <span class="comment">// listDevs.sort((Developer o1, Developer o2)-&gt;o1.getAge()-o2.getAge());</span></span><br><span class="line">        listDevs.sort((Developer o1, Developer o2) -&gt; Integer.compare(o1.getAge(), o2.getAge()));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//java 8 lambda feature</span></span><br><span class="line">        listDevs.forEach((developer)-&gt;System.out.println(developer));</span><br><span class="line">        <span class="comment">// Tony注：</span></span><br><span class="line">        <span class="comment">// listDevs.forEach(System.out::println);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Developer&gt; <span class="title function_">getDevelopers</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        List&lt;Developer&gt; result = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Developer&gt;();</span><br><span class="line"></span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;ricky&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;70000&quot;</span>), <span class="number">33</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;alvin&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;80000&quot;</span>), <span class="number">20</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;jason&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;100000&quot;</span>), <span class="number">10</span>));</span><br><span class="line">        result.add(<span class="keyword">new</span> <span class="title class_">Developer</span>(<span class="string">&quot;iris&quot;</span>, <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;170000&quot;</span>), <span class="number">55</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Before Sort</span><br><span class="line">Developer [name=ricky, salary=70000, age=33]</span><br><span class="line">Developer [name=alvin, salary=80000, age=20]</span><br><span class="line">Developer [name=jason, salary=100000, age=10]</span><br><span class="line">Developer [name=iris, salary=170000, age=55]</span><br><span class="line"></span><br><span class="line">After Sort</span><br><span class="line">Developer [name=jason, salary=100000, age=10]</span><br><span class="line">Developer [name=alvin, salary=80000, age=20]</span><br><span class="line">Developer [name=ricky, salary=70000, age=33]</span><br><span class="line">Developer [name=iris, salary=170000, age=55]</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-更多的例子"><a href="#2-3-更多的例子" class="headerlink" title="2.3 更多的例子"></a>2.3 更多的例子</h2><p>根据年龄：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//sort by age</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="comment">// return o1.getAge() - o2.getAge();</span></span><br><span class="line">        <span class="keyword">return</span> Integer.compare(o1.getAget(), o2.getAge());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda</span></span><br><span class="line"><span class="comment">// Tony 注：同样的问题</span></span><br><span class="line"><span class="comment">// listDevs.sort((Developer o1, Developer o2)-&gt;o1.getAge()-o2.getAge());</span></span><br><span class="line">listDevs.sort((Developer o1, Developer o2) -&gt; Integer.compare(o1.getAge(), o2.getAge()));</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda, valid, parameter type is optional</span></span><br><span class="line"><span class="comment">// Tony 注：同样的问题</span></span><br><span class="line"><span class="comment">// listDevs.sort((o1, o2)-&gt;o1.getAge()-o2.getAge());</span></span><br><span class="line">listDevs.sort((o1, o2) -&gt; Integer.compare(o1.getAge(), o2.getAge()));</span><br></pre></td></tr></table></figure>
+<p>根据名字：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sort by name</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getName().compareTo(o2.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda</span></span><br><span class="line">listDevs.sort((Developer o1, Developer o2)-&gt;o1.getName().compareTo(o2.getName()));</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda</span></span><br><span class="line">listDevs.sort((o1, o2)-&gt;o1.getName().compareTo(o2.getName()));</span><br></pre></td></tr></table></figure>
+<p>根据薪水：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//sort by salary</span></span><br><span class="line">Collections.sort(listDevs, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Developer&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Developer o1, Developer o2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> o1.getSalary().compareTo(o2.getSalary());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda</span></span><br><span class="line"><span class="comment">// Tony注：使用compareTo()同样可以，本质上底层还是在调用compare()方法</span></span><br><span class="line">listDevs.sort((Developer o1, Developer o2)-&gt;o1.getSalary().compareTo(o2.getSalary()));</span><br><span class="line"></span><br><span class="line"><span class="comment">//lambda</span></span><br><span class="line">listDevs.sort((o1, o2)-&gt;o1.getSalary().compareTo(o2.getSalary()))</span><br></pre></td></tr></table></figure>
+<p>从小到大排序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Developer&gt; salaryComparator = (o1, o2)-&gt;o1.getSalary().compareTo(o2.getSalary());</span><br><span class="line">listDevs.sort(salaryComparator);</span><br></pre></td></tr></table></figure>
+<p>从大到小倒序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Developer&gt; salaryComparator = (o1, o2)-&gt;o1.getSalary().compareTo(o2.getSalary());</span><br><span class="line">listDevs.sort(salaryComparator.reversed());</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tony 注：掘金版本给出了下面的实现：</span></span><br><span class="line"><span class="comment">// Comparator&lt;Developer&gt; salaryComparator = (o1, o2)-&gt;o2.getSalary().compareTo(o1.getSalary());</span></span><br><span class="line"><span class="comment">// 但是实际上根据Comparator接口中compare函数的定义，当o1的值小于o2，应该返回负值。因此上面这行的实现违反设计原则的，并不推荐。</span></span><br></pre></td></tr></table></figure>
+
+<p>本文虽然大部分是转载，但关于<code>Integer</code>类型的数值比较防止溢出问题，以及对<code>compare()</code>方法的设计均有重要注解，因此归类为二创。</p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014042066/article/details/76248692">java8-Lambda中比较器Comparator的使用 - CSDN</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6898898464252690446">java8-Lambda中比较器Comparator的使用 - 掘金</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/y506798278/article/details/104503588">Java8 Lambda表达式（二）System.out::println与Lambda表达式</a></p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5"><span class="toc-text">一、概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B"><span class="toc-text">二、使用实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E9%80%9A%E8%BF%87new-%E6%96%B0%E5%BB%BA%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-text">2.1 通过new 新建比较器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E9%80%9A%E8%BF%87Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%96%B0%E5%BB%BA%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-text">2.2 通过Lambda表达式新建比较器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E6%9B%B4%E5%A4%9A%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">2.3 更多的例子</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://xqtony.github.io/2023/05/26/lambda in Comparator/">https://xqtony.github.io/2023/05/26/lambda in Comparator/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Comparator/" rel="tag">Comparator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/compare/" rel="tag">compare</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%88%9B/" rel="tag">二创</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2023/05/26/two%20sort/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          比较Collections.sort()与Arrays.sort()
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/05/26/reverses/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          区分几个reverse方法
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/26/reverses/">区分几个reverse方法</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/26/lambda%20in%20Comparator/">Lambda中比较器Comparator的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/26/two%20sort/">比较Collections.sort()与Arrays.sort()</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/26/comparable%20vs%20comparator/">比较Comparator与Comparable接口</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/26/compareTo/">浅谈compareTo()方法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" style="font-size: 13.33px;">AI辅助创作</a> <a href="/tags/Arrays/" style="font-size: 10px;">Arrays</a> <a href="/tags/BigDecimal/" style="font-size: 10px;">BigDecimal</a> <a href="/tags/Collections/" style="font-size: 13.33px;">Collections</a> <a href="/tags/Comparable/" style="font-size: 10px;">Comparable</a> <a href="/tags/Comparator/" style="font-size: 16.67px;">Comparator</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Lambda/" style="font-size: 10px;">Lambda</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/compare/" style="font-size: 16.67px;">compare</a> <a href="/tags/compareTo/" style="font-size: 13.33px;">compareTo</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/%E4%BA%8C%E5%88%9B/" style="font-size: 13.33px;">二创</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 13.33px;">原创</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/">Java高级特性和类库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays/" rel="tag">Arrays</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigDecimal/" rel="tag">BigDecimal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections/" rel="tag">Collections</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable/" rel="tag">Comparable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparator/" rel="tag">Comparator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compare/" rel="tag">compare</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compareTo/" rel="tag">compareTo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%9B/" rel="tag">二创</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.r2coding.com/">Road 2 Coding</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 Tony Kong.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>

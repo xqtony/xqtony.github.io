@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>归档: 2023 | 托尼的技术博客</title>
+  <title>比较Collections.sort()与Arrays.sort() | 托尼的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   
@@ -78,107 +78,155 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-
-  
-  
+        <section id="main"><article id="post-two sort" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
     
     
-    <section class="archives-wrap">
-      <div class="archive-title">
+      <header class="article-header">
         
-          <i class="fa fa-date"></i>
-          2023
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      比较Collections.sort()与Arrays.sort()
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-05-25T22:04:40.531Z" itemprop="datePublished">05/26/2023</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/">Java高级特性和类库</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2023/05/26/two%20sort/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Collections-sort-与-Arrays-sort-的异同？"><a href="#Collections-sort-与-Arrays-sort-的异同？" class="headerlink" title="Collections.sort() 与 Arrays.sort() 的异同？"></a><code>Collections.sort()</code> 与 <code>Arrays.sort()</code> 的异同？</h1><p><code>Collections.sort()</code> 和 <code>Arrays.sort()</code> 都是 Java 中用于排序的方法，它们的异同如下：</p>
+<span id="more"></span>
+
+<ol>
+<li><p>参数类型不同：<code>Collections.sort()</code> 方法接受 List 类型的参数，而 <code>Arrays.sort()</code> 方法接受数组类型的参数。</p>
+</li>
+<li><p>底层实现不同：<code>Collections.sort()</code> 方法使用的是归并排序（Merge Sort）算法，而 <code>Arrays.sort()</code> 方法使用的是快速排序（Quick Sort）算法。</p>
+</li>
+<li><p>排序稳定性不同：<code>Collections.sort()</code> 方法是稳定排序，即对于相等的元素，排序前后它们的相对位置不会发生改变。而 <code>Arrays.sort()</code> 方法是不稳定排序，即对于相等的元素，排序前后它们的相对位置可能会发生改变。</p>
+</li>
+<li><p>性能表现不同：<code>Arrays.sort()</code> 方法在大多数情况下比 <code>Collections.sort()</code> 方法性能更好，因为它对原始数据进行排序，不需要进行额外的包装和拆包操作。</p>
+</li>
+</ol>
+<p>综上所述，如果需要对 List 进行排序，应该使用 <code>Collections.sort()</code> 方法；而如果需要对数组进行排序，应该使用 <code>Arrays.sort()</code> 方法。</p>
+<p>但需要注意的是，<code>Arrays.sort()</code> 方法和<code>Collections.sort()</code> 方法在排序时都可能会改变原始对象内元素的顺序，所以在使用前需要备份。</p>
+<p>另外注意，使用<code>Collections.sort()</code>时，被排序列表中的元素必须实现<code>Comparable</code>接口中的<code>compareTo</code>方法。</p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23179075/article/details/78753136">Java中Collections.sort()的使用!</a></p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Collections-sort-%E4%B8%8E-Arrays-sort-%E7%9A%84%E5%BC%82%E5%90%8C%EF%BC%9F"><span class="toc-text">Collections.sort() 与 Arrays.sort() 的异同？</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://xqtony.github.io/2023/05/26/two sort/">https://xqtony.github.io/2023/05/26/two sort/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arrays/" rel="tag">Arrays</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Collections/" rel="tag">Collections</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sort/" rel="tag">sort</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2023/05/26/comparable%20vs%20comparator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          比较Comparator与Comparable接口
         
       </div>
-      <div class="archives">
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/26/reverses/">
-      <time class="dt-published" datetime="2023-05-25T23:24:08.374Z" itemprop="datePublished">05/26/2023</time>
-      | <span class="archive-article-title">区分几个reverse方法</span>
     </a>
-  </li>
-</ul>
-
-
   
   
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/26/lambda%20in%20Comparator/">
-      <time class="dt-published" datetime="2023-05-25T22:15:31.551Z" itemprop="datePublished">05/26/2023</time>
-      | <span class="archive-article-title">Lambda中比较器Comparator的使用</span>
+    <a href="/2023/05/26/lambda%20in%20Comparator/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          Lambda中比较器Comparator的使用
+        
+      </div>
     </a>
-  </li>
-</ul>
-
-
   
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/26/two%20sort/">
-      <time class="dt-published" datetime="2023-05-25T22:04:40.531Z" itemprop="datePublished">05/26/2023</time>
-      | <span class="archive-article-title">比较Collections.sort()与Arrays.sort()</span>
-    </a>
-  </li>
-</ul>
+</nav>
 
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/26/comparable%20vs%20comparator/">
-      <time class="dt-published" datetime="2023-05-25T21:54:15.297Z" itemprop="datePublished">05/26/2023</time>
-      | <span class="archive-article-title">比较Comparator与Comparable接口</span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/26/compareTo/">
-      <time class="dt-published" datetime="2023-05-25T20:19:45.560Z" itemprop="datePublished">05/26/2023</time>
-      | <span class="archive-article-title">浅谈compareTo()方法</span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/23/todo/">
-      <time class="dt-published" datetime="2023-05-23T04:49:36.894Z" itemprop="datePublished">05/23/2023</time>
-      | <span class="archive-article-title"></span>
-    </a>
-  </li>
-</ul>
-
-
-  
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/05/23/MySQL_DB_basic/">
-      <time class="dt-published" datetime="2023-05-22T16:28:19.611Z" itemprop="datePublished">05/23/2023</time>
-      | <span class="archive-article-title">MySQL数据库 - 基础篇</span>
-    </a>
-  </li>
-</ul>
+      
+      
+        
 
 
 
-  </div></section>
 
 
+
+
+
+      
+    </footer>
+  </div>
+</article>
 </section>
         
           <aside id="sidebar">
@@ -328,6 +376,16 @@
 
 
 
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
 
 
 
