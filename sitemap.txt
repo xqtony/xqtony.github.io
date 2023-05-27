@@ -1,3 +1,4 @@
+https://xqtony.github.io/2023/05/27/ssh%20git%20config/
 https://xqtony.github.io/2023/05/26/reverses/
 https://xqtony.github.io/2023/05/23/todo/
 https://xqtony.github.io/2023/05/26/comparable%20vs%20comparator/
@@ -24,5 +25,9 @@ https://xqtony.github.io/tags/Comparator/
 https://xqtony.github.io/tags/Comparable/
 https://xqtony.github.io/tags/Lambda/
 https://xqtony.github.io/tags/reverse/
+https://xqtony.github.io/tags/git/
+https://xqtony.github.io/tags/github/
+https://xqtony.github.io/tags/ssh/
 https://xqtony.github.io/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/
 https://xqtony.github.io/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/
+https://xqtony.github.io/categories/Git/

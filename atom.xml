@@ -6,7 +6,7 @@
   <link href="https://xqtony.github.io/atom.xml" rel="self"/>
   
   <link href="https://xqtony.github.io/"/>
-  <updated>2023-05-26T00:31:07.034Z</updated>
+  <updated>2023-05-27T15:29:18.509Z</updated>
   <id>https://xqtony.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简单记录下GitHub SSH访问的配置</title>
+    <link href="https://xqtony.github.io/2023/05/27/ssh%20git%20config/"/>
+    <id>https://xqtony.github.io/2023/05/27/ssh%20git%20config/</id>
+    <published>2023-05-27T15:19:36.108Z</published>
+    <updated>2023-05-27T15:29:18.509Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近发现http方式pull和push都很容易出现下面的log：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\xqkon\Documents\Work\xqtony.github.io&gt;git push</span><br><span class="line">fatal: unable to access <span class="string">&#x27;https://github.com/xqtony/xqtony.github.io.git/&#x27;</span>: Failed to connect to github.com port 443 after 21068 ms: Timed out</span><br></pre></td></tr></table></figure><span id="more"></span><p>找到的最可靠的方案是切换成SSH。</p><p>通过下面的命令生成公钥和私钥，邮箱记得替换成自己的。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;xxx@xx.com&quot;</span></span><br></pre></td></tr></table></figure><p>设置成功之后可以测试连通性：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure><p>添加一下ssh方式访问，但是因为已经存在一个<code>origin</code>了，只能叫<code>origin_ssh</code>了。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin_ssh git@github.com:xxxxxxxxxx.git</span><br><span class="line">git push -u origin_ssh master</span><br></pre></td></tr></table></figure><p>最好把<code>remote</code>的名字也修改了。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># list all remotes</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote rename origin origin_http</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line">git remote rename origin_ssh origin</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>参考资料：</p><p><a href="https://blog.csdn.net/lun_hui_wu_qi/article/details/118785305">最新解决git拉取远程仓库失败问题：Failed to connect to github.com port 443: Timed out.</a><br><a href="https://blog.csdn.net/weixin_43987277/article/details/113467941">git使用——10.使用ssh方式推送git项目</a><br><a href="https://blog.csdn.net/q1302182594/article/details/52954575">通过SSH向GitHub push代码</a><br><a href="https://www.cnblogs.com/feipeng8848/p/12844456.html">git重命名远程名称</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;最近发现http方式pull和push都很容易出现下面的log：&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;C:&#92;Users&#92;xqkon&#92;Documents&#92;Work&#92;xqtony.github.io&amp;gt;git push&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fatal: unable to access &lt;span class=&quot;string&quot;&gt;&amp;#x27;https://github.com/xqtony/xqtony.github.io.git/&amp;#x27;&lt;/span&gt;: Failed to connect to github.com port 443 after 21068 ms: Timed out&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Git" scheme="https://xqtony.github.io/categories/Git/"/>
+    
+    
+    <category term="git" scheme="https://xqtony.github.io/tags/git/"/>
+    
+    <category term="github" scheme="https://xqtony.github.io/tags/github/"/>
+    
+    <category term="ssh" scheme="https://xqtony.github.io/tags/ssh/"/>
+    
+  </entry>
   
   <entry>
     <title>区分几个reverse方法</title>
