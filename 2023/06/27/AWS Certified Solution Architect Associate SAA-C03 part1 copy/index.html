@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AWS Certified Solution Architect Associate SAA-C03 笔记 (一) | 托尼的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="托尼的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">托尼的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about"><i class="fa fa-user"></i> 关于</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AWS Certified Solution Architect Associate SAA-C03 part1 copy" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AWS Certified Solution Architect Associate SAA-C03 笔记 (一)
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-06-26T16:50:59.881Z" itemprop="datePublished">06/27/2023</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/AWS/">AWS</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part1%20copy/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+      <i id="changyan_count_unit" data-xid="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part1%20copy/"></i>
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近花了相当长的时间在Pluralsight平台上学习AWS助理架构师的课程。下面是上课记得一些笔记，对于入门和复习都有很大帮助，欢迎阅读。</p>
+<p>本篇是第一篇，涵盖了AWS基础，IAM，S3，EC2等内容。</p>
+<p>持续更新中…</p>
+<span id="more"></span>
+
+
+<h1 id="AWS-Fundamentals"><a href="#AWS-Fundamentals" class="headerlink" title="AWS Fundamentals"></a>AWS Fundamentals</h1><h2 id="The-Building-Blocks-of-AWS-Availability-Zones-and-Regions"><a href="#The-Building-Blocks-of-AWS-Availability-Zones-and-Regions" class="headerlink" title="The Building Blocks of AWS: Availability Zones and Regions"></a>The Building Blocks of AWS: Availability Zones and Regions</h2><p>Region: 2+ AZ<br>AZ: 独立机房<br>Edge Locations：CloudFront、AWS CDN 内容分发网络</p>
+<h2 id="Who-Owns-What-in-the-Cloud"><a href="#Who-Owns-What-in-the-Cloud" class="headerlink" title="Who Owns What in the Cloud?"></a>Who Owns What in the Cloud?</h2><p>toll 过路费<br>charge a toll for the use of (a bridge or road):</p>
+<h2 id="Compute-Storage-Databases-and-Networking"><a href="#Compute-Storage-Databases-and-Networking" class="headerlink" title="Compute, Storage, Databases, and Networking"></a>Compute, Storage, Databases, and Networking</h2><p>Compute:<br>EC2, Lambda, EB<br>Storage:<br>S3, Elastic Block Store (EBS), Elastic File Server (EFS), FSx, Stroage Gateway<br>Databases:<br>RDS, DynamoDB, Redshift<br>Networking:<br>VPCs (Virtual DC), Direct Connect, Route 53 (DNS), API Gateway, AWS Global Accelerator</p>
+<h2 id="What-Is-the-Well-Architected-Framework"><a href="#What-Is-the-Well-Architected-Framework" class="headerlink" title="What Is the Well-Architected Framework?"></a>What Is the Well-Architected Framework?</h2><p>AWS Witepapers &amp; Guide:<br>考试前必读。<br>Operational Excellence, Performance Efficiency, Security, Cost Optimization, Reliability, Sustainability</p>
+<h2 id="AWS-Fundamentals-Exam-Tips"><a href="#AWS-Fundamentals-Exam-Tips" class="headerlink" title="AWS Fundamentals Exam Tips"></a>AWS Fundamentals Exam Tips</h2><p>Review:</p>
+<p>Region: 2+AZ<br>AZ: different dc<br>Edge locations: AWS CDN, (CloudFront)</p>
+<p>Responsibility:<br>SG, IAM, patching EC2, patching DB on EC2, etc<br>Mgmt DC, sec came, etc</p>
+<p>Key Services:<br>Compute: EC2, Lam, EB<br>Storage: S3, EBS, EFS, FSx, SG<br>DB: RDS, DDB, Rs<br>Net: VPCs, DirC, R53, ApiG, AGA</p>
+<p>Whitepaper reading.</p>
+<h1 id="Identity-and-Access-Management-IAM"><a href="#Identity-and-Access-Management-IAM" class="headerlink" title="Identity and Access Management (IAM)"></a>Identity and Access Management (IAM)</h1><h2 id="Securing-the-Root-Account"><a href="#Securing-the-Root-Account" class="headerlink" title="Securing the Root Account"></a>Securing the Root Account</h2><p>IAM:<br>Create user<br>Create groups and roles<br>Control access to AWS resources</p>
+<h2 id="Permanent-IAM-Credentials"><a href="#Permanent-IAM-Credentials" class="headerlink" title="Permanent IAM Credentials"></a>Permanent IAM Credentials</h2><p>PowerUser除了不能搞IAM其他和Admin一样<br>IAM全球<br>Root全能，不日用<br>新用户默认无权限<br>Access Key ID是编程用的<br>新用户密码等只能看一次<br>设置密码轮换是必要的<br>IAM Federation 可以用LDAP<br>Id Federation 也能用LDAP，SMAL协议。</p>
+<h2 id="IAM-Exam-Tips"><a href="#IAM-Exam-Tips" class="headerlink" title="IAM Exam Tips"></a>IAM Exam Tips</h2><p>4安全方法：<br>1 Root MFA<br>2 Admin组创建，分配权限<br>3 创建Admin用户<br>4 Admin用户加入到Admin组</p>
+<p>IAM JSON<br>考点：<br>IAM是全球的<br>Root全能，不日用<br>New User无权限<br>Access key ID和secret access key不是用户名密码；是编程用的<br>密码等只能看一次<br>密码轮换是必要的<br>IAM自治：可以复用现有账户<br>ID 自治： 添加SAML标准的Active Dir。(LDAP)</p>
+<h1 id="Simple-Storage-Service-S3"><a href="#Simple-Storage-Service-S3" class="headerlink" title="Simple Storage Service (S3)"></a>Simple Storage Service (S3)</h1><h2 id="S3-Overview"><a href="#S3-Overview" class="headerlink" title="S3 Overview"></a>S3 Overview</h2><p>S3目录<br>S3<br>对象存储<br>任意文件类型<br>无法用来跑OS或者DB。仅仅是静态存储。<br>S3 基本<br>无线容量<br>单个文件最大5TB<br>S3 Buckets概念。（buckets类似文件夹）<br>S3 Bucket名字注册在全局命名空间，全球唯一<br>举例<br><a target="_blank" rel="noopener" href="https://bucket名称.s3.region.amazonaws.com/key-name">https://bucket名称.s3.region.amazonaws.com/key-name</a><br>文件上传，成功则返回200 Code<br>S3 Overview：<br>Key：  Object name<br>Version ID: important for multiple version<br>Value: data it self, byte array<br>Metadata: data about the data<br>S3 is a safe place to store.<br>Availability and durability<br>Highly available and Highly durable<br>Build for 99.95% - 99.99% service availability, depends on S3 tier<br>11 9 durability.</p>
+<p>S3 Standard</p>
+<ol>
+<li>HAD<br>99.99% avail<br>11 9’s dur</li>
+<li>Designed for frequent access</li>
+<li>suitable for most workloads.</li>
+</ol>
+<ul>
+<li>default storage class</li>
+<li>websites, content distribution, mobile and gaming, etc.<br>3大特性：<br>Tiered Storage 分级存储<br>Lifecycle Management 生命周期管理<br>Versioning 版本<br>安全：</li>
+</ul>
+<ol>
+<li>服务端加密</li>
+<li>ACLs （访问控制列表）</li>
+<li>Bucket policies 桶策略<br>RAW 一致性<br>成功写操作之后，读可以正确读取<br>Strong consistency 强一致性<br>考点：</li>
+<li>基于对象<br>2 非OS&#x2F;DB存储<br>3 至高5TB<br>4 无限容量<br>5 s3是全局命名空间<br>6 成功文件上传返回200<br>S3对象Tips：<br>Key： 对象名称<br>Value： 数据本身<br>Version ID：版本号<br>Metadata：元数据</li>
+</ol>
+<h2 id="Securing-Your-Bucket-with-S3-Block-Public-Access"><a href="#Securing-Your-Bucket-with-S3-Block-Public-Access" class="headerlink" title="Securing Your Bucket with S3 Block Public Access"></a>Securing Your Bucket with S3 Block Public Access</h2><p>我忘记过Version ID<br>Object ACLs vs Bucket Policies<br>OA: 单个对象级别的权限控制<br>BP：整个Bucket级别<br>创建Bucket是Global的，不单独针对区域。</p>
+<h2 id="Hosting-a-Static-Website-Using-S3"><a href="#Hosting-a-Static-Website-Using-S3" class="headerlink" title="Hosting a Static Website Using S3"></a>Hosting a Static Website Using S3</h2><p>S3可以serve静态网页。<br>S3自动缩放大小<br>考点：<br>静态网页 -》联想到S3<br>BP： 让整个bucket公共，使用Bucket Policy<br>Static Only：只能搞静态网页。有数据库链接的不行。<br>自动扩容：S3可以自动扩容。<br>考点：<br>1 默认私有buckets<br>2 ACLs 单个权限<br>3 Bucket Policy 整个bucket权限<br>4 HTTP 200 表明上传完成</p>
+<h2 id="Versioning-Objects-in-S3"><a href="#Versioning-Objects-in-S3" class="headerlink" title="Versioning Objects in S3"></a>Versioning Objects in S3</h2><p>版本控制优势：<br>全版本保留<br>备份<br>无法关闭（只能暂停）<br>生命周期<br>MFA支持<br>delete marker<br>5个技巧：<br>All Versions 全版本保留<br>备份<br>无法关闭（一旦打开）<br>生命周期规则<br>支持MFA</p>
+<h2 id="S3-Storage-Classes"><a href="#S3-Storage-Classes" class="headerlink" title="S3 Storage Classes"></a>S3 Storage Classes</h2><p>S3 存储分类<br>标准<br>standard-infrequent Access<br>One Zone-infrequent Access<br>Intelligent-Tiering<br>3 Glacier..<br>S3标准<br>高可用行高持久性<br>高频访问<br>适用大多数负载<br>考点：<br>视频网站：存储视频，图片用S3标准<br>静态网站，使用S3标准<br>S3 标准-IA<br>不频，但能快速访问<br>访问要钱<br>用例：长期存储，备份，DR灾备<br>99.9 Avail （少个9）<br>11个9的持久性<br>S3 One Zone-Infrequent Access<br>类似于S3 Standard-IA<br>只存在于单个AZ<br>节约20%成本<br>适合于不重要的长期存在数据<br>99.5% Avil<br>11个9的持久<br>S3 Intelligent-Tiering<br>使用AI决定去<br>99.99% Avail<br>11个9的持久性<br>3 Glacier：<br>Glacier Instant Retrieval</p>
+<ul>
+<li>长期存储，立即获取<br>Glacier Flexible Retrieval</li>
+<li>理想的长期春初，需要几分钟到12小时来获取<br>Glacier Deep Arcihive</li>
+<li>7-10年的存储目标，12到48 小时获取<br>99.99 A<br>11个9持久</li>
+</ul>
+<h2 id="Lifecycle-Management-with-S3"><a href="#Lifecycle-Management-with-S3" class="headerlink" title="Lifecycle Management with S3"></a>Lifecycle Management with S3</h2><p>生命周期管理<br>30天转移<br>在 S3 Glacier 中，您必须将数据存储在存档中，存档的最低时间限制为90天。这意味着，一旦您将数据存储在 S3 Glacier 中，您必须等待至少90天，才能检索该数据。这是因为 S3 Glacier 是一种适用于长期存储和归档的服务，而不是适用于频繁访问的热存储服务。</p>
+<p>S3生命周期考点：<br>自动在不同分类中移动<br>和version一起用<br>当前和过去version都可以</p>
+<h2 id="S3-Object-Lock-and-Glacier-Vault-Lock"><a href="#S3-Object-Lock-and-Glacier-Vault-Lock" class="headerlink" title="S3 Object Lock and Glacier Vault Lock"></a>S3 Object Lock and Glacier Vault Lock</h2><p>S3对象锁<br>WORM 写一次，读很多次<br>write once, read many<br>用于监管需求<br>Governance Mode<br>治理模式<br>无权限情况下， 不能删除或者覆盖<br>Compliance Mode<br>合规模式<br>被保护对象无法被覆盖或者删除，任何用户都不行。包括Root用户也不行<br>Retention Periods<br>保留期<br>在特定时间段内保留对象，逾期后可以覆盖和修改。除非加上了Legal Hold，加上了不能改<br>Legal Hold是指一种法律程序，用于保护企业在诉讼或调查期间的电子数据。它是指企业在知道或合理预料到将要发生法律诉讼或调查时，采取的一系列措施，以确保与该诉讼或调查相关的信息不会被更改、删除或丢失。这些措施包括暂停数据销毁、备份和保留相关数据，并采取其他必要措施以确保数据完整性和可用性。 </p>
+<p>Legal Hold通常是由企业的法律部门或合规部门发起并监督的。如果企业没有及时采取Legal Hold措施，可能会面临法律责任和罚款。<br> Retention Mode：Retention Mode是一种数据保留模式，可确保对象在指定的保留期内不被删除或更改。在Retention Mode下，对象被锁定，无法被更改或删除。Retention Mode有两种模式：COMPLIANCE和GOVERNANCE。COMPLIANCE模式是一种严格的保留模式，保留期内的对象无法被删除或更改。GOVERNANCE模式是一种灵活的保留模式，允许管理员在保留期内删除和更改对象，但需要提前30天发出通知。<br>3个 Object Lock的提示：<br>1 S3 OL用来存放WORM模型<br>2 OL可以是在单个对象，也可以在整个bucket上<br>3 OL有两个模式：Gov Mode和Comp Mode<br>Legal Hold Mode：Legal Hold Mode是一种法律保留模式，可确保对象在法律程序期间不被删除或更改。在Legal Hold Mode下，对象被锁定，无法被更改或删除，直到Legal Hold被解除。<br>S3 OL Mode分类：<br>Comp M：谁都不能改<br>Gov M：特定人能改<br>WORM模型是一种数据存储模型，即“Write Once Read Many”（只写一次，多次读取）。WORM模型的基本思想是，一旦数据被写入存储系统，就无法更改或删除，只能被多次读取。这种模型通常用于需要长期保留数据的场景，如合规性要求、法律诉讼、归档等。</p>
+<p>WORM模型通常用于磁带库、光盘存储、硬盘阵列等存储系统中。在这些存储系统中，数据被写入后，存储系统会对其进行保护，以防止数据被意外或恶意删除或修改。这种保护通常包括数据备份、数据加密、访问控制等措施。</p>
+<p>WORM模型的优点在于，它可以确保数据的完整性和可用性，防止数据被意外或恶意删除或修改。这对于需要长期保留数据的场景非常重要，如金融、医疗、法律等行业。同时，WORM模型也有一定的缺点，如存储成本高、数据访问速度较慢等。因此，在选择存储系统时，需要根据实际需求进行选择。<br>这句话的意思是，AWS S3 Glacier Vault Lock功能允许您为每个S3 Glacier Vault轻松部署和执行合规性控制，并使用保管库锁定策略来保护其数据。Vault Lock是一种控制访问和保护数据的功能，它可以通过Vault Lock策略来限制对Vault的访问和修改。Vault Lock策略是一种JSON文档，可以定义保管库的访问权限、保留期限、删除保护等规则。</p>
+<p>使用Vault Lock功能，您可以确保保管库中的数据符合合规性要求，并且不能被意外或恶意删除或修改。Vault Lock策略可以防止管理员或其他用户删除或修改数据，即使他们拥有相应的权限。Vault Lock还可以防止数据被意外或恶意删除或修改，从而保护数据的完整性和可用性。</p>
+<p>总之，S3 Glacier Vault Lock功能提供了一种简单而有效的方式来确保S3 Glacier Vault中的数据符合合规性要求，并保护数据的完整性和可用性。<br>在AWS S3 Glacier中，Vault指的是一种逻辑容器，用于存储数据归档。Vault是S3 Glacier中的基本存储单元，您可以将数据归档到Vault中，然后对其进行管理和检索。Vault可以看作是一个文件夹，您可以在其中创建和管理归档文件。</p>
+<p>每个Vault都有一个唯一的名称，并且可以配置一些属性，如访问权限、保留期限、删除保护等。Vault中的归档文件可以通过AWS控制台、AWS CLI或AWS SDK进行管理和检索。您可以上传和下载归档文件，列出Vault中的所有归档文件，以及删除归档文件等。</p>
+<p>在S3 Glacier中，Vault是一个重要的概念，它提供了一种方便而安全的方式来存储和管理数据归档。同时，Vault也是S3 Glacier中的一个重要的合规性要求，您需要确保Vault中的数据符合合规性要求，并保护数据的完整性和可用性。<br>情境：<br>WORM + S3: S3 Obj Lock  -&gt; Comp, Gov<br>WORM + Glacier: Glacier Vault Lock</p>
+<h2 id="Encrypting-S3-Objects"><a href="#Encrypting-S3-Objects" class="headerlink" title="Encrypting S3 Objects"></a>Encrypting S3 Objects</h2><p>Encryption分类<br>1 传输加密</p>
+<ul>
+<li>SSL&#x2F;TLS</li>
+<li>HTTPS<br>2 Rest加密：服务端加密</li>
+<li>SSE-S3：S3-管理密钥，使用AES 256</li>
+<li>SSE-KMS: AWS Key Mgmt Service</li>
+<li>SSE-C： Customer提供的key<br>3 Rest加密 客户端加密<br>上传之前加密，自己高<br>两种强制执行桶加密的方式：<br>Console 点击复选框就可以<br>考点：BP 桶策略<br>强制执行服务端加密：<br>1:<br>使用x-amz-server-side-encryption头<br>2:<br>两种选项：<br>x-amz-server-side-encryption: AES256<br>x-amz-server-side-encryption: aws:kms<br>3:<br>header放在PUT请求中，让S3加密obj，在上传的时候，使用指定的加密方法。<br>可以创建BP，deny任何header不包含SSE头的PUT请求，<br>考点：<br>传输加密：SSL&#x2F;TLS，HTTPS<br>服务端加密：SSE，SSE-S3， SSE-KM，SSE-C<br>客户端加密：自定义<br>强制加密：PUT请求</li>
+</ul>
+<h2 id="Optimizing-S3-Performance"><a href="#Optimizing-S3-Performance" class="headerlink" title="Optimizing S3 Performance"></a>Optimizing S3 Performance</h2><p>S3性能优化</p>
+<p>S3前缀越多，性能越高。<br>第一个字节100-200ms</p>
+<p>充不多5500个Get请求，per 桶，per 前缀（prefix）<br>KMS限制：<br>上传调用API<br>下载调用API<br>KSM API调用配额<br>分区域的，5500，10000， 30000每秒<br>不能要求加量<br>多段上传</p>
+<ul>
+<li>推荐对&gt;100MB文件操作</li>
+<li>大于5GB的必须分</li>
+<li>并行传输 （<br>下载：<br>Byte-Range Fetches</li>
+<li>并行下载，分byte段</li>
+<li>失败只针对特定比特段<br>S3 字节区域下载：<br>加速下载<br>可以只加载一部分文件（比如文件头）<br>考点：<br>1 Prefix指的是<br>mybucketname&#x2F;sub1&#x2F;sub2&#x2F;file.jpg<br>中<br>&#x2F;sub1&#x2F;sub2&#x2F;这一段<br>2 大量访问：<br>3500 PUT&#x2F;COPY&#x2F;POST&#x2F;DELETE<br>5500 GET&#x2F;HEAD<br>per second, per prefix<br>3 分开prefix可以提高性能<br>考点：<br>KMS</li>
+<li>有配额的</li>
+<li>分区域，五千五，一万，三万请求每秒</li>
+<li>不让加量<br>考点：<br>分段上传性能高<br>100MB以上推荐，5GB必须分段<br>S3 Byte-range fetch 可以加速下载</li>
+</ul>
+<h2 id="Backing-up-Data-With-S3-Replication"><a href="#Backing-up-Data-With-S3-Replication" class="headerlink" title="Backing up Data With S3 Replication"></a>Backing up Data With S3 Replication</h2><p>S3 复制以前叫做跨区域复制<br>3个考点：<br>1 可以从一个桶复制到另一个桶<br>2 现存的对象不会自动复制<br>3 删除标记默认不会复制</p>
+<h2 id="S3-Exam-Tips"><a href="#S3-Exam-Tips" class="headerlink" title="S3 Exam Tips"></a>S3 Exam Tips</h2><p>总结：<br>基于对象、不适用OS、DB、之高5TB、容量无限<br>全局名字，不可重名、上传成功返回200<br>4点：key value verionId metadata<br>安全4点：默认私有、对象ACLs、桶策略、HTTP代码成功200<br>静态网站：桶策略、静态内容、自动扩容<br>版本控制：全版本、备份、无法关闭、生命周期规则、支持MFA<br>存储分级：S3 Std， S3 Std-IA， S3 OZ-IA，S3 Glacier， S3 Glacier DA，SA3 I-T<br>重要数据：99.99，99.9， 99.5， 1<br>生命周期：自动移动，联合版本使用，当前过去版本都可以使用<br>S3对象锁：WORM模型，单个对象或者整个桶可以锁，分两类：Gov和Comp<br>Glacier锁：强制实施WORM<br>加密：两类：传输加密SSL&#x2F;TLS，服务端加密：SSE（server-side enc）SSE-S3 （AES256） SSE-KMS SSE-C 客户端加密：自己解决 强制加密桶策略：加header<br>Prefix定义（文件夹名字） 性能 3500PUT，5500 GET、HEADER  越多Prefix，性能越高（2个能达到11000 GET）每秒<br>KMS配额限定 5500，1万，3万，且无法增加<br>性能优化：多部份上传，100MB以上，5GB以上必须，S3brf 快速下载 并列<br>S3复制：以前叫跨区复制。也可以同区域复制，从一个buck到另一个buck，现存默认不复制，默认不复制删除标记</p>
+<h1 id="Elastic-Compute-Cloud-EC2"><a href="#Elastic-Compute-Cloud-EC2" class="headerlink" title="Elastic Compute Cloud (EC2)"></a>Elastic Compute Cloud (EC2)</h1><h2 id="EC2-Overview"><a href="#EC2-Overview" class="headerlink" title="EC2 Overview"></a>EC2 Overview</h2><p>EC2计费标准：<br>On-Demand 按需 按小时、秒<br>Reserved 保留 1-3年<br>Spot   竞价<br>Dedicated  专用<br>按需的场景：<br>Flex<br>Short term<br>Test water<br>保留实例场景：(RI)<br>可预测的使用<br>特定用量需求<br>先付钱<br>标准RI<br>可转换RI<br>调度RI<br>RI能省钱至高72%<br>需要承诺1-3年的用量<br>超级flexible。不限定EC2， Lambda也ok<br>何时使用Spot<br>不能用来做网站。因为竞价，可能顶掉了。<br>Flex yes<br>Urgent no<br>Cost sensitive yes<br>Dedicated专用：<br>合规性需求<br>专用许可证<br>AWS Price Calculator<br>考点：<br>EC2像个VM，在AWS而非自由数据中心。<br>选择现在需要的容量<br>按需缩放<br>按用量付费<br>等几分钟二不是几个月<br>EC2付费选项：<br> 按需，保留，Spot，专用。</p>
+<h2 id="Demo-Launching-an-EC2-Instance’"><a href="#Demo-Launching-an-EC2-Instance’" class="headerlink" title="Demo: Launching an EC2 Instance’"></a>Demo: Launching an EC2 Instance’</h2><p> VPC是个虚拟dc<br>一个subnet就是一个AZ</p>
+<h2 id="AWS-Command-Line"><a href="#AWS-Command-Line" class="headerlink" title="AWS Command Line"></a>AWS Command Line</h2><p>aws s3 ls<br>aws s3 mb s3:&#x2F;&#x2F;sdfdsfsdfsdf<br>aws s3 cp hello.txt s3:&#x2F;&#x2F;sdfdsfsdfsdf</p>
+<p>考点：<br>给最少的权限；创建和使用IAM组，附加上IAM Policy，自动继承<br>考点CLI：<br>1 Secret Access Key 私密访问密钥 只能看一次<br>2 不要分享 Key pair<br>3 支持Win Linux和Mac</p>
+<h2 id="Using-Roles"><a href="#Using-Roles" class="headerlink" title="Using Roles"></a>Using Roles</h2><p>可以给EC2设置IAM Role成为S3 Admin<br>考点：<br>1 倾向使用Role<br>2 避免硬编码角色<br>3 政策是控制role的权限的<br>4 可以直接更新policy<br>5 可以attach和detah role给running EC2<br>考点：<br>1 用Role的确是最佳实践<br>2 用Role可以通过ssh 附加.pem公钥登录了，因此不需要使用access key ID和secret access key了。<br>3 策略。通过策略（Policies）来控制Role的权限<br>4 更新。更新Role上附加的策略可以即刻生效<br>5 附加，去除。可以随意的在运行中的EC2上附加或者去除Role。很方便</p>
+<h2 id="Security-Groups-and-Bootstrap-Scripts"><a href="#Security-Groups-and-Bootstrap-Scripts" class="headerlink" title="Security Groups and Bootstrap Scripts"></a>Security Groups and Bootstrap Scripts</h2><p>安全组和Bootstrip script<br>计算机通信常用端口<br>22<br>3389<br>80<br>443<br>Bootstrap 脚本是初始化EC2时候运行的脚本。懂了<br>安全组考点：<br>0 安全组是虚拟的防火墙的概念<br>1 安全组的更改会立即生效<br>2 一个安全组内可以有任何数量的EC2<br>3 一个EC2也 可以附加上多个安全组<br>4 默认禁止所有入境流量<br>5 所有出境流量都是允许的</p>
+<h2 id="EC2-Metadata-and-User-Data"><a href="#EC2-Metadata-and-User-Data" class="headerlink" title="EC2 Metadata and User Data"></a>EC2 Metadata and User Data</h2><p>metadata指的是 关于EC2本身的一些数据<br><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html</a><br>考点：<br>1 User data 就是bootstrap script<br>2 Metadata就是EC2数据<br>3 能用bootstrap 脚本访问metadata</p>
+<h2 id="Networking-with-EC2"><a href="#Networking-with-EC2" class="headerlink" title="Networking with EC2"></a>Networking with EC2</h2><p>使用增强网络的时候，ENA100GB，VI10GB，选ENA<br> 弹性构造适配器<br>Elastic Fabric Adapter<br>EFA：提速，降低延迟<br>使用EFA，高性能计算HPC可以直接与机器学习程序通信，通过on-bypass.<br>考点<br>3中网络，ENI，低成本<br>EN 10 ~100 GB的网速需求<br>EFA 高性能计算场景，需要OS-bypass的场景。</p>
+<h2 id="Optimizing-with-EC2-Placement-Groups"><a href="#Optimizing-with-EC2-Placement-Groups" class="headerlink" title="Optimizing with EC2 Placement Groups"></a>Optimizing with EC2 Placement Groups</h2><p>Placement Group优化EC2<br>集群 – 将一个可用区中靠近的实例打包在一起。通过使用该策略，工作负载可以实现所需的低延迟网络性能，以满足高性能计算（HPC）应用程序通常使用的紧密耦合的节点到节点通信的要求。</p>
+<p>分区 – 将实例分布在不同的逻辑分区上，以便一个分区中的实例组不会与不同分区中的实例组使用相同的基础硬件。该策略通常为大型分布式和重复的工作负载所使用，例如，Hadoop、Cassandra 和 Kafka。</p>
+<p>分布 – 将一小组实例严格放置在不同的基础硬件上以减少相关的故障。<br><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/placement-groups.html">https://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/placement-groups.html</a><br>考点：<br>1 cluster 集群  用于放在一起，减少延迟，提高吞吐量<br>2 spread 分布，一个是一个<br>3 partition 分区，几个是一个<br>考点：<br>集群不能跨az，其他两个可以<br>只有特定的类型才能放在“置放群组”里，包括计算优化，内存优化，GPU，以及存储优化。<br>AWS推荐一个集群里使用同质实例<br>无法合并两个PG<br>可以把现存实例移到PG里。（必须是关闭状态，而且只能通过AWS CLI或者SDK来实现，通过网页控制台目前还不可以）</p>
+<h2 id="Solving-Licensing-Issues-with-Dedicated-Hosts"><a href="#Solving-Licensing-Issues-with-Dedicated-Hosts" class="headerlink" title="Solving Licensing Issues with Dedicated Hosts"></a>Solving Licensing Issues with Dedicated Hosts</h2><p>专用实例的场景：<br>有许可证的情况</p>
+<h2 id="Timing-Workloads-with-Spot-Instances-and-Spot-Fleets"><a href="#Timing-Workloads-with-Spot-Instances-and-Spot-Fleets" class="headerlink" title="Timing Workloads with Spot Instances and Spot Fleets"></a>Timing Workloads with Spot Instances and Spot Fleets</h2><p>Spot得先给出你能给的最高价格。<br>Spot考点：<br>1 至高节省90%<br>2 仅适用于不需要持久化存储的场景<br>3 可以设置“不让停”时长<br>4 Spot舰队Fleet是一些Spot和（可选）按需实例的结合</p>
+<h2 id="Deploying-vCenter-in-AWS-with-VMware-Cloud-on-AWS"><a href="#Deploying-vCenter-in-AWS-with-VMware-Cloud-on-AWS" class="headerlink" title="Deploying vCenter in AWS with VMware Cloud on AWS"></a>Deploying vCenter in AWS with VMware Cloud on AWS</h2><p>AWS上用VMware的几个场景<br>考点：<br>可以使用VMware去部署vCenter在AWS里</p>
+<h2 id="Extending-AWS-Beyond-the-Cloud-with-AWS-Outposts"><a href="#Extending-AWS-Beyond-the-Cloud-with-AWS-Outposts" class="headerlink" title="Extending AWS Beyond the Cloud with AWS Outposts"></a>Extending AWS Beyond the Cloud with AWS Outposts</h2><p>Outposts是把AWS服务带到本地的私有服务器上<br>AWS Outposts Rack是一个完整的机架式设备，其中包含了计算、存储和网络设备，以及AWS云中的所有服务。<br>AWS Outposts Server是一种单独的计算设备，它可以与现有的本地存储和网络设备配合使用。<br>Rack和Server的区别要我说，就Rack什么都带，Server就单独一个Server；Rack U很多（40多），Server少（可能就一个）<br>考点：<br>AWS本地化，考虑Outpost<br>大Rack<br>小Server</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AWS-Fundamentals"><span class="toc-text">AWS Fundamentals</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Building-Blocks-of-AWS-Availability-Zones-and-Regions"><span class="toc-text">The Building Blocks of AWS: Availability Zones and Regions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Who-Owns-What-in-the-Cloud"><span class="toc-text">Who Owns What in the Cloud?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compute-Storage-Databases-and-Networking"><span class="toc-text">Compute, Storage, Databases, and Networking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-the-Well-Architected-Framework"><span class="toc-text">What Is the Well-Architected Framework?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Fundamentals-Exam-Tips"><span class="toc-text">AWS Fundamentals Exam Tips</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Identity-and-Access-Management-IAM"><span class="toc-text">Identity and Access Management (IAM)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Securing-the-Root-Account"><span class="toc-text">Securing the Root Account</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Permanent-IAM-Credentials"><span class="toc-text">Permanent IAM Credentials</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IAM-Exam-Tips"><span class="toc-text">IAM Exam Tips</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Simple-Storage-Service-S3"><span class="toc-text">Simple Storage Service (S3)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Overview"><span class="toc-text">S3 Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Securing-Your-Bucket-with-S3-Block-Public-Access"><span class="toc-text">Securing Your Bucket with S3 Block Public Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hosting-a-Static-Website-Using-S3"><span class="toc-text">Hosting a Static Website Using S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Versioning-Objects-in-S3"><span class="toc-text">Versioning Objects in S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Storage-Classes"><span class="toc-text">S3 Storage Classes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifecycle-Management-with-S3"><span class="toc-text">Lifecycle Management with S3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Object-Lock-and-Glacier-Vault-Lock"><span class="toc-text">S3 Object Lock and Glacier Vault Lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Encrypting-S3-Objects"><span class="toc-text">Encrypting S3 Objects</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimizing-S3-Performance"><span class="toc-text">Optimizing S3 Performance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backing-up-Data-With-S3-Replication"><span class="toc-text">Backing up Data With S3 Replication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Exam-Tips"><span class="toc-text">S3 Exam Tips</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Elastic-Compute-Cloud-EC2"><span class="toc-text">Elastic Compute Cloud (EC2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Overview"><span class="toc-text">EC2 Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Launching-an-EC2-Instance%E2%80%99"><span class="toc-text">Demo: Launching an EC2 Instance’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Command-Line"><span class="toc-text">AWS Command Line</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Roles"><span class="toc-text">Using Roles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Security-Groups-and-Bootstrap-Scripts"><span class="toc-text">Security Groups and Bootstrap Scripts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Metadata-and-User-Data"><span class="toc-text">EC2 Metadata and User Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Networking-with-EC2"><span class="toc-text">Networking with EC2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimizing-with-EC2-Placement-Groups"><span class="toc-text">Optimizing with EC2 Placement Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solving-Licensing-Issues-with-Dedicated-Hosts"><span class="toc-text">Solving Licensing Issues with Dedicated Hosts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Timing-Workloads-with-Spot-Instances-and-Spot-Fleets"><span class="toc-text">Timing Workloads with Spot Instances and Spot Fleets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploying-vCenter-in-AWS-with-VMware-Cloud-on-AWS"><span class="toc-text">Deploying vCenter in AWS with VMware Cloud on AWS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Extending-AWS-Beyond-the-Cloud-with-AWS-Outposts"><span class="toc-text">Extending AWS Beyond the Cloud with AWS Outposts</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://xqtony.github.io/2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part1 copy/">https://xqtony.github.io/2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part1 copy/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/" rel="tag">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud/" rel="tag">Cloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" rel="tag">云技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          AWS Certified Solution Architect Associate SAA-C03 笔记 (二)
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+  <div id="comments"><div id="SOHUCS" sid="2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part1 copy/"></div></div>
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part1%20copy/">AWS Certified Solution Architect Associate SAA-C03 笔记 (一)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part2/">AWS Certified Solution Architect Associate SAA-C03 笔记 (二)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/kafka/">Kafka初探</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/todo/">目标</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/ssh%20git%20config/">简单记录下GitHub SSH访问的配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" style="font-size: 20px;">AI辅助创作</a> <a href="/tags/AWS/" style="font-size: 13.33px;">AWS</a> <a href="/tags/Arrays/" style="font-size: 10px;">Arrays</a> <a href="/tags/BigDecimal/" style="font-size: 10px;">BigDecimal</a> <a href="/tags/Cloud/" style="font-size: 13.33px;">Cloud</a> <a href="/tags/Collections/" style="font-size: 13.33px;">Collections</a> <a href="/tags/Comparable/" style="font-size: 10px;">Comparable</a> <a href="/tags/Comparator/" style="font-size: 16.67px;">Comparator</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Lambda/" style="font-size: 10px;">Lambda</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/compare/" style="font-size: 16.67px;">compare</a> <a href="/tags/compareTo/" style="font-size: 13.33px;">compareTo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/%E4%BA%8C%E5%88%9B/" style="font-size: 16.67px;">二创</a> <a href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" style="font-size: 13.33px;">云技术</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 20px;">原创</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/">Java高级特性和类库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/" rel="tag">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays/" rel="tag">Arrays</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigDecimal/" rel="tag">BigDecimal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/" rel="tag">Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections/" rel="tag">Collections</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable/" rel="tag">Comparable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparator/" rel="tag">Comparator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compare/" rel="tag">compare</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compareTo/" rel="tag">compareTo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%9B/" rel="tag">二创</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" rel="tag">云技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.r2coding.com/">Road 2 Coding</a>
+        </li>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="http://www.ityouknow.com/">分享技术，品味人生</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 Tony Kong.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <script>
+      window._config = { showScore: true };
+      (function(){
+        var appid = 'cywH6FxXr';
+        var conf = '0e148934918dc59f570bbb420fa4f089';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+        if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+        }
+        else {
+          var loadJs=function(d,a){
+            var b=document.createElement("script");b.setAttribute("type","text/javascript");
+            b.setAttribute("charset","UTF-8");
+            b.setAttribute("src",d);
+            if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+            nodes.appendChild(b)
+          };
+          loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
+        }
+        var loadCss = function(cssString){
+          var style=document.createElement("style");
+          style.setAttribute("type", "text/css");
+          if(style.styleSheet){// IE
+              style.styleSheet.cssText = cssString;
+          } else {// w3c
+              var cssText = document.createTextNode(cssString);
+              style.appendChild(cssText);
+          }
+          nodes.appendChild(style);
+        }
+      })();
+      function removeElement(_element){
+          var _parentElement = _element.parentNode;
+          if(_parentElement){
+                  _parentElement.removeChild(_element);
+          }
+      }
+      var removeAD = document.createElement("div");
+      removeAD.id = 'removeAD';
+      var adInterval1 = setInterval(function() {
+        if(document.querySelector("#feedAv")){
+          document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+          document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+          //- removeElement(document.querySelectorAll("#feedAv")[0]);
+          var feedAv = document.querySelector("#feedAv").children;
+          for( item of feedAv){
+            item.style.display = 'none'
+          }
+          document.querySelector("#removeAD").style.display="none"
+          clearInterval(adInterval1);
+        }
+      },1000);
+      var adInterval2 = setInterval(function() {
+        if(document.querySelector("#pop_ad")){
+          removeElement(document.querySelector("#pop_ad"));
+          clearInterval(adInterval2);
+        }
+      }, 1000);
+    </script>
+    
+<script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+  
+  
+
+
+
+
+
+</body>
+</html>

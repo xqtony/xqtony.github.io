@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AWS Certified Solution Architect Associate SAA-C03 笔记 (二) | 托尼的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="托尼的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">托尼的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about"><i class="fa fa-user"></i> 关于</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AWS Certified Solution Architect Associate SAA-C03 part2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AWS Certified Solution Architect Associate SAA-C03 笔记 (二)
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-06-26T16:02:34.650Z" itemprop="datePublished">06/27/2023</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/AWS/">AWS</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part2/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+      <i id="changyan_count_unit" data-xid="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part2/"></i>
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本篇是AWS Certified Solution Architect Associate SAA-C03 笔记的第二部分，涵盖了EBS，DB，Route 53及ELB的内容。</p>
+<p>持续更新中…</p>
+<span id="more"></span>
+
+
+<h1 id="Elastic-Block-Storage-EBS-and-Elastic-File-System-EFS"><a href="#Elastic-Block-Storage-EBS-and-Elastic-File-System-EFS" class="headerlink" title="Elastic Block Storage (EBS) and Elastic File System (EFS)"></a>Elastic Block Storage (EBS) and Elastic File System (EFS)</h1><h2 id="EBS-Overview"><a href="#EBS-Overview" class="headerlink" title="EBS Overview"></a>EBS Overview</h2><p>减轻记忆负载：<br>仅在IOPS大于16000时，考虑io1或者io2 （Provisioned IOPS）<br>io2有99.999的持久性</p>
+<p>大数据，数据仓库，ETL，考虑st1<br>最便宜 sc1</p>
+<h2 id="Volumes-and-Snapshots"><a href="#Volumes-and-Snapshots" class="headerlink" title="Volumes and Snapshots"></a>Volumes and Snapshots</h2><p>EBS 弹性块存储，考点：<br>1 Volume 虚拟磁盘存在于EBS中，snapshot在S3中<br>2 snapshot是某一时刻对存储容器的照片，且具有增量的特定<br>3 第一个snapshot得花点时间创建，为了创建一致的快照，需要停止实例，并解除容器的关联。<br>4 可以在不同的region之间共享snapshot<br>5 可以在使用EBS的过程中更换EBS容量类型</p>
+<hr>
+<p>EBS（Elastic Block Store）是AWS提供的一种云存储服务，用于提供持久化的块存储。在EBS中，Volume和Snapshot是两个重要的概念。</p>
+<p>Volume是EBS中的虚拟磁盘，它可以被挂载到EC2实例上，作为持久化的存储空间。Volume的大小可以根据需要动态调整，支持多种类型，如SSD和磁盘。Volume中存储的数据是持久化的，即使EC2实例被关闭或删除，数据仍然会保留在Volume中。</p>
+<p>Snapshot是EBS中的备份机制，它可以对一个Volume进行快照备份，保存在S3中。Snapshot是一个只读的镜像，可以用来恢复Volume的数据，也可以作为新的Volume的基础镜像。通过定期创建Snapshot，可以保证数据的安全和可靠性，同时也可以提高恢复速度和灵活性。</p>
+<p>总的来说，Volume是EBS中的存储空间，而Snapshot是对Volume的备份，用于数据的恢复和复制。两者共同构成了EBS的核心功能，为云应用提供了可靠的持久化存储服务。</p>
+<h2 id="Protecting-EBS-Volumes-with-Encryption"><a href="#Protecting-EBS-Volumes-with-Encryption" class="headerlink" title="Protecting EBS Volumes with Encryption"></a>Protecting EBS Volumes with Encryption</h2><p>加密的虚拟磁盘的考点：<br>静态数据在磁盘内是加密的<br>实例与磁盘之间的动态数据也是加密的<br>镜像是加密的<br>由镜像创建的虚拟磁盘也是加密的<br>如何加密虚拟磁盘（考点）：<br>创建一个未加密的根设备磁盘镜像<br>复制一份镜像，过程中选择加密选项<br>从加密镜像创建一个AMI<br>用AMI启动新的加密实例</p>
+<h2 id="EC2-Hibernation"><a href="#EC2-Hibernation" class="headerlink" title="EC2 Hibernation"></a>EC2 Hibernation</h2><p>EC2休眠（考点）<br>EC2休眠功能是让RAM里数据存到磁盘<br>更快的启动速度因为不需要重启OS<br>实例的RAM必须小于150GB<br>实例家族包括C，M和R的3，4，5.<br>支持Win，Amazon Linux 2 AMI，Ubuntu<br>实例不能休眠超过60天<br>休眠功能支持按需实例和保留实例</p>
+<h2 id="EFS-Overview"><a href="#EFS-Overview" class="headerlink" title="EFS Overview"></a>EFS Overview</h2><p> EFS简单来说就网络磁盘，NFS<br>简单总结一下EFS<br>NFSv4协议<br>目前只支持Linux<br>使用KMS加密<br>自增的文件系统，不需要提前计划容量<br>按用量收费.<br> 1000+链接<br>10GB每秒<br>1000TB最多<br>EFS支持存储分级，Standard收费高，IA收费低。可以指定生命周期，移动文件来省钱<br>EFS考点：<br>支持NFSv4<br>按照用量付费<br>支持PB级别存储<br>千级并发NFS支持<br>跨AZ存储<br>具备读写一致性<br>提示：看见NFS高扩展性共享存储就考虑EFS。</p>
+<h2 id="FSx-Overview"><a href="#FSx-Overview" class="headerlink" title="FSx Overview"></a>FSx Overview</h2><p>考点：<br>看见SharePoint迁移，立马想到FSx for Windows。因为是使用了Windows一模一样的文件系统。<br>考点：<br>分布式，高弹性：EFS<br>Windows相关： FSx for Win<br>AI&#x2F;ML：FSx for Lustre</p>
+<h2 id="Amazon-Machine-Images-EBS-vs-Instance-Store"><a href="#Amazon-Machine-Images-EBS-vs-Instance-Store" class="headerlink" title="Amazon Machine Images: EBS vs. Instance Store"></a>Amazon Machine Images: EBS vs. Instance Store</h2><p>考点：<br>分布式，高弹性：EFS<br>Windows相关： FSx for Win<br>AI&#x2F;ML：FSx for lustre<br>AMI 亚马逊机器镜像<br> AMI就两种：<br>来自其他EBS快照的EBS<br>来自S3中存的模板的Instance store<br>instance store volumes<br>实例存储虚拟磁盘<br>也叫 临时存储<br>无法停止；重启不丢数据；删除实例则丢失实例存储虚拟磁盘。<br>AWS中的Instance store volume是一种暂时性的存储设备，通常与EC2实例一起使用。它是通过直接连接到物理主机而不是网络来提供高性能和低延迟的存储。Instance store volume通常用于需要高性能和低延迟的应用程序，如数据库、缓存和日志文件。</p>
+<p>Instance store volume有以下特点：</p>
+<ol>
+<li><p>速度快：Instance store volume是直接连接到物理主机的，因此具有非常快的IO性能。</p>
+</li>
+<li><p>暂时性：Instance store volume的数据是暂时性的，如果实例终止或失败，数据将被删除。因此，Instance store volume不适合存储需要长期保存的数据。</p>
+</li>
+<li><p>可用性有限：Instance store volume的可用性取决于实例类型和区域。某些实例类型可能没有Instance store volume，而某些区域可能没有可用的Instance store volume。</p>
+</li>
+</ol>
+<p>因此，如果您需要高性能和低延迟的存储，而且数据不需要长期保存，那么Instance store volume是一个很好的选择。但是，如果您需要长期保存数据或需要高可用性和可靠性，那么建议使用EBS卷。<br>考点：<br>Instance store也叫临时存储 ephemeral<br>Instance store不允许stop<br>EBS可以stop<br>这俩都可以重启，不丢数据<br>默认这俩终止都删磁盘，但是EBS可以选择不删<br>附加：<br>AMI简单来说就是蓝图</p>
+<h2 id="AWS-Backup"><a href="#AWS-Backup" class="headerlink" title="AWS Backup"></a>AWS Backup</h2><p>考点：<br>AWS备份，看到集中式管理所有服务类似需求考虑AWS备份。<br>可以结合AWS Organization来实现多个账户的集中式管理<br>好处是：集中管理；生命周期自定义；合规性的便利，可以强制备份生命周期，可加密，可审计。</p>
+<h2 id="EBS-Exam-Tips"><a href="#EBS-Exam-Tips" class="headerlink" title="EBS Exam Tips"></a>EBS Exam Tips</h2><p>EBS总结考点：<br>EBS固态：<br>gp2启动盘，一万六，三九<br>gp3高性能，也是三九，是gp2四倍性能<br>io1也是三九，比前俩更快<br>io2最快了，五九<br>考点：<br>EBS机械硬盘：<br>st1 三九，不能当启动盘，用来当数据仓库，大数据的。<br>sc1也是三九，便宜，不能当启动盘，用来放点不常用数据的，比如log什么的<br>考点：<br>比较Volume和Snapshot<br>存储地点不同：EBS和S3<br>快照是增量的，是虚拟磁盘某时刻的状态<br>第一个快照花的时间会比较久。<br>快照想要一致的话，要关机，解绑虚拟磁盘<br>快照可以跨账户，跨区域共享，但是必须要先拷贝到目的区域<br>EBS可以在运行中更改虚拟磁盘大小和类型<br>考点：<br>AMI的类型：<br>EBS与Instace Store<br>都能重启不丢东西<br>EBS能stop，IS不能<br>EBS能保留终止后的磁盘，IS不能<br>IS是基于内存的。<br>AMI就是蓝图<br>加密卷考点：<br>静态数据是加密的<br>动态数据也是加密的<br>快照是加密的<br>所有加密快照创建的虚拟磁盘也是加密的<br>加密流程重要考点：<br>四步加密一个磁盘：<br>1 创建一个快照<br>2 复制快照，勾选加密选项<br>3 基于加密快照创建AMI<br>4 基于加密AMI启动加密实例<br>休眠考点：<br>休眠是把RAM存到EBS里了<br>启动速度快<br>RAM不能超过150GB<br>支持的实例类型：C&#x2F;M&#x2F;R 3-5<br>跨平台，Win，A L 2， Ubuntu<br>休眠不能超过60天<br>仅在按需和预留实例中有<br>EFS考点：<br>支持版本NFSv4<br>千级并发<br>按用量付费<br>分布在同区域的多个AZ上<br>最多PB级别<br>读写一致<br>重要：场景题目，提到高扩展性共享NFS，考虑EFS。<br>考题：<br>EFS：高并发<br>FSx Win：微软专用<br>FSx Lustre：AI&#x2F;ML<br>考题：选啥存储实例<br>S3：无服务存储<br>冰川：归档<br>EFS：跨AZ集中式存储<br>FSx Lustre：AI&#x2F;ML等<br>EBS Volume：持久性EC2用的硬盘<br>Instance Store：临时性存一下EC2实例<br>FSx for Win：微软全家桶<br>考点：AWS备份：<br>合并几乎所有服务<br>结合AWS组织可以跨账户备份<br>好处是：集中管理，自动备份，可以定义生命周期；合规性能力提高，可以强制备份，备份加密，可以备份完之后审计</p>
+<h1 id="Databases"><a href="#Databases" class="headerlink" title="Databases"></a>Databases</h1><h2 id="Relational-Database-Service-RDS-Overview"><a href="#Relational-Database-Service-RDS-Overview" class="headerlink" title="Relational Database Service (RDS) Overview"></a>Relational Database Service (RDS) Overview</h2><p>OLTP与OLAP的区别：<br>T主打传输<br>A主打分析<br>RDS只能用来OLTP<br>想要OLAP，记得Redshift（红移）<br>RDS里的Multi-AZ ：<br>就是个一模一样的备份。只能用作备份，不能用于负载均衡。<br>Multi-AZ的备份能力由AWS提供，用户不关心备份的细节<br> 考点：<br>RDS类型有SQL Server，MySQL， PostgreSQL，MariaDB，以及Amazon Aurora<br>RDS是为OLTP负载准备的<br>RDS不适合OLAP负载</p>
+<h2 id="Increasing-Read-Performance-with-Read-Replicas"><a href="#Increasing-Read-Performance-with-Read-Replicas" class="headerlink" title="Increasing Read Performance with Read Replicas"></a>Increasing Read Performance with Read Replicas</h2><p>考点：<br>Multi-AZ vs Read Replica</p>
+<ul>
+<li><p>一模一样的备份，存放在其他AZ</p>
+</li>
+<li><p>只能用于容灾</p>
+</li>
+<li><p>灾难发生，RDS可以自动使用待机版本恢复</p>
+</li>
+<li><p>只读备份，可以是同AZ，跨AZ甚至跨Region</p>
+</li>
+<li><p>用来增加读性能（重点）</p>
+</li>
+<li><p>适用于heavy read的应用；也适用与隔离生产数据库，用于只读目的</p>
+</li>
+</ul>
+<h2 id="What-Is-Amazon-Aurora"><a href="#What-Is-Amazon-Aurora" class="headerlink" title="What Is Amazon Aurora?"></a>What Is Amazon Aurora?</h2><p>Aurora考点：<br>最少3个AZ，每个AZ有2个备份，最低6份数据<br>Aurora镜像可以在账户之间共享<br>3种Read 副本，Aurora，MySQL以及PostgreSQL，其中只有Aurora的具有自动failover能力<br>Aurora默认开启自动备份，也可以手动创建镜像。<br>Aurora无服务简单便宜，不可预测的负载情境下适用</p>
+<h2 id="DynamoDB-Overview"><a href="#DynamoDB-Overview" class="headerlink" title="DynamoDB Overview"></a>DynamoDB Overview</h2><p>DynamoDB考点：<br>4个事实：<br>存储在SSD上<br>分布在3个不同地理位置的DC<br>支持 最终一致性读取 和 强一致性读取<br>最终一致性读取： 最佳读取性能，一秒钟内所有数据的备份都是一致的<br>强一致性读取：任意时刻读取的内容都包含改时刻之前的所有写入操作。</p>
+<h2 id="When-Do-We-Use-DynamoDB-Transactions"><a href="#When-Do-We-Use-DynamoDB-Transactions" class="headerlink" title="When Do We Use DynamoDB Transactions?"></a>When Do We Use DynamoDB Transactions?</h2><p>DynamoDB Transactions考点：<br>场景题：任何提及ACID需求的<br>DynamoDB提速原子性，一致性，隔离性，持久性在一个或多个表的一个AWS账户和一个区域内<br>全部或没有</p>
+<h2 id="Saving-Your-Data-with-DynamoDB-Backups"><a href="#Saving-Your-Data-with-DynamoDB-Backups" class="headerlink" title="Saving Your Data with DynamoDB Backups"></a>Saving Your Data with DynamoDB Backups</h2><p>DynamoDB中的备份Point-in-Time Recovery的特点：<br>保护意料之外的写操作或删除操作<br>可以回退到35天内任何时间<br>递增的备份<br>默认不开启<br>最新的回退的是5分钟之前。5分钟之内不能。</p>
+<h1 id="Virtual-Private-Cloud-VPC-Networking"><a href="#Virtual-Private-Cloud-VPC-Networking" class="headerlink" title="Virtual Private Cloud (VPC) Networking"></a>Virtual Private Cloud (VPC) Networking</h1><h2 id="VPC-Overview"><a href="#VPC-Overview" class="headerlink" title="VPC Overview"></a>VPC Overview</h2><p>VPC中包含Web，Application，Database三种子网。<br>Web是公共子网，面向互联网<br>Application是私有子网，面向web tier和db tier<br>Database也是私有子网，只面向app tier。<br>可以在公司数据中心和AWS云之间建立VPN<br>一个计算IP地址段的网站<br>AWS里是最多能支持<br>10.0.0.0&#x2F;16，保留了一部分地址。<br>局域网地址有三个网段：（复习）<br>10.0.0.0&#x2F;8<br>172.16.0.0&#x2F;12<br>192.168.0.0&#x2F;16</p>
+<p>很多组织，公司 ，都用10.0.0.0<br>下面两节的架构<br>Internet Gateway网关<br>Virtual Private Gateway 虚拟私有网关<br>默认VPC vs 自定义VPC：<br>默认VPC更简单，默认VPC子网都有连接到Internet的路由，每个EC2实例都有一个公共和私有IP。<br>自定义VPC可以完全自定义，但是要花时间去配置。</p>
+<h2 id="Demo-Provisioning-a-VPC-Part-1"><a href="#Demo-Provisioning-a-VPC-Part-1" class="headerlink" title="Demo: Provisioning a VPC - Part 1"></a>Demo: Provisioning a VPC - Part 1</h2><p>Classless Inter-Domain Routing (CIDR) is an IP address allocation method that improves data routing efficiency on the internet.<br>subnet约等于虚拟防火墙</p>
+<p>VPC设置IP地址的时候，会保留5个地址。<br>0 网络地址<br>1 VPC路由<br>2 DNS服务器<br>3 保留<br>255 广播地址，VPC没有广播但是保留<br>VPC考点：<br>VPC可以认为是AWS中的逻辑数据中心<br>VPC包含网关（或者叫虚拟私有网关），路由表，网络访问控制列表，子网，以及安全组<br>一个子网只存在于一个AZ里 （常考）。</p>
+<h2 id="Demo-Provisioning-a-VPC-Part-2"><a href="#Demo-Provisioning-a-VPC-Part-2" class="headerlink" title="Demo: Provisioning a VPC - Part 2"></a>Demo: Provisioning a VPC - Part 2</h2><p>ICMP是ping相关的<br>配置公共子网，通过公共子网里的机器ssh到私有子网的机器上，yum update一下发现的确不能访问互联网。</p>
+<h2 id="Using-NAT-Gateways-for-Internet-Access"><a href="#Using-NAT-Gateways-for-Internet-Access" class="headerlink" title="Using NAT Gateways for Internet Access"></a>Using NAT Gateways for Internet Access</h2><p>NAT Gateway的5个要点：<br>1 在AZ里冗余<br>2 5Gbps起步，目前最高45Gbps<br>3 无需patch<br>4 与安全组无关联<br>5 自动分配公有IP地址</p>
+<h2 id="Protecting-Your-Resources-with-Security-Groups"><a href="#Protecting-Your-Resources-with-Security-Groups" class="headerlink" title="Protecting Your Resources with Security Groups"></a>Protecting Your Resources with Security Groups</h2><p>这一节复习安全组，主要强调安全组是有状态的。有状态是指当你在实例上发送一个请求，它的response是可以无视inbound安全组规则的。同理，一个inbound请求进来之后的响应可以无视outbound规则外流。<br>安全组的是有状态的。它能记得住一个入站请求，并在出站的时候自动放行，而无视出站规则。</p>
+<h2 id="Controlling-Subnet-Traffic-with-Network-ACLs"><a href="#Controlling-Subnet-Traffic-with-Network-ACLs" class="headerlink" title="Controlling Subnet Traffic with Network ACLs"></a>Controlling Subnet Traffic with Network ACLs</h2><p>Network ACL:<br>1 可选的配置，和防火墙很像，可以控制in、out的流量，可以在一个或多个子网上生效<br>2 可以配置与安全组类似的配置，来额外添加一层防护。<br>补充：<br>默认网络ACL：VPC自动创建的，默认允许所有流入流出的流量<br>自定义网络ACL：可以创建自定义的 ACL。默认的自定义ACL禁用所有的流入流出流量（重点）<br>子网关联：每个子网必须与一个ACL关联。如果不显式的指定子网关联，则自动的与默认ACL关联。<br>IP拦截：拦截IP使用的是ACL，而不是安全组。<br>ACL与子网：<br>ACL与子网是一对多的关系；一个ACL可以关联多个子网，但是一个子网一次只能关联一个ACL。当一个子网与新的ACL关联，其旧的ACL关联会被移除掉。</p>
+<p>ACL中的rule，需要越小的越先执行。<br>ACL把入站和出站规则分开了，每个rule可以是白名单或黑名单。<br>ACL是无状态的。入站允许的相应也需要服从出站的规则。反之亦然。<br>Ephemeral ports 译作临时端口，是创建TCP链接时候会用到的端口。刚才的例子里，为出站规则开放了TCP的一系列临时端口。<br>考点：</p>
+<ol>
+<li>默认ACL允许所有入站和出站流量</li>
+<li>自定义的ACL默认Deny所有流量</li>
+<li>子网关联：子网必须与某个ACL关联，如果不指定，默认关联到默认ACL上。</li>
+<li>IP拦截：只能通过ACL实现IP拦截。安全组做不到IP拦截。</li>
+<li>ACL与安全组是一对多的关系。给安全组执行新ACL会替换掉原来的ACL。</li>
+<li>ACL包含一系列rule，按照序号从小到大执行。</li>
+<li>ACL分为入站和出站两套规则，每套里面又分为允许和拒绝两种。</li>
+<li>ACL是无状态的。它记不住曾经放行过的规则，所以入站出站都得配置一次。</li>
+</ol>
+<h2 id="Private-Communication-Using-VPC-Endpoints"><a href="#Private-Communication-Using-VPC-Endpoints" class="headerlink" title="Private Communication Using VPC Endpoints"></a>Private Communication Using VPC Endpoints</h2><p>AWS中的VPC Endpoint是什么？如何理解它？它有什么用？</p>
+<p>AWS中的VPC Endpoint是一种连接VPC与AWS服务的方式，使得您的VPC内的资源可以私有地访问AWS服务，同时不需要通过Internet Gateway或NAT设备。</p>
+<p>VPC Endpoint可以理解为一个虚拟的网络设备，它提供了一个接口，使得您的VPC内的资源可以直接与AWS服务通信，而无需通过Internet连接。这意味着您可以更加安全地连接到AWS服务，并且不需要在VPC和AWS服务之间暴露任何公共IP地址。</p>
+<p>VPC Endpoint可以用于连接多种AWS服务，例如S3、DynamoDB、Kinesis等。使用VPC Endpoint可以提高安全性、可靠性和性能，并且可以减少网络数据传输的成本。<br>什么东西在VPC内？什么AWS服务在VPC之外？</p>
+<p>在VPC内可以包含各种AWS资源，例如EC2实例、RDS数据库、Elasticache缓存、Lambda函数等。此外，您还可以在VPC内创建各种网络资源，例如子网、路由表、网络ACL等。通过将这些资源放置在VPC内，您可以更好地控制它们的安全性和网络连接。</p>
+<p>AWS服务可以分为两类：一类是可以在VPC内使用的服务，例如S3、DynamoDB、Kinesis等；另一类是无法在VPC内使用的服务，例如Route 53、CloudFront等。对于无法在VPC内使用的服务，您需要通过Internet连接来访问它们。但是，AWS提供了一些安全性更高的连接方式，例如VPC Endpoint和VPN连接，使得您可以更加安全地连接到这些服务。<br>AWS中需要通过Interface Endpoint连接的服务包括：</p>
+<p>Elastic Compute Cloud (EC2)<br>Relational Database Service (RDS)<br>Elastic Cache<br>Elastic Kubernetes Service (EKS)<br>DocumentDB<br>AWS PrivateLink<br>这些服务需要通过Interface Endpoint连接，因为它们是在VPC中运行的服务，需要使用私有IP地址进行通信。<br>AWS中需要通过Gateway Endpoint连接的服务包括：</p>
+<p>Simple Storage Service (S3)<br>DynamoDB<br>这些服务需要通过Gateway Endpoint连接，因为它们是在AWS公共基础设施上运行的服务，无法直接使用私有IP地址进行通信。<br>AWS提供了两种类型的VPC Endpoint：Gateway类型和Interface类型。</p>
+<p>Gateway类型的VPC Endpoint用于连接S3和DynamoDB这样的AWS服务。它们是通过VPC Endpoint连接到AWS服务的，但是在VPC Endpoint内部使用的是AWS公共IP地址。这种类型的VPC Endpoint可以用于连接多个AWS服务，但是不能用于连接在VPC中运行的服务。</p>
+<p>Interface类型的VPC Endpoint用于连接在VPC中运行的服务，例如EC2、RDS和Elasticache等。它们使用了一个私有IP地址，可以直接将流量路由到VPC中的资源。这种类型的VPC Endpoint可以用于连接多种AWS服务，但是需要在每个服务上创建一个独立的VPC Endpoint。</p>
+<p>因此，Gateway类型的VPC Endpoint适用于连接AWS服务，而Interface类型的VPC Endpoint适用于连接在VPC中运行的资源。<br>通过VPC Endpoint连接S3，而不是通过NAT连接S3.这里VPC Endpoint的类型是Gateway<br>VPC EP考点：</p>
+<ol>
+<li>想纯通过AWS内网连接AWS服务的时候使用</li>
+<li>两种类型，接口和网关</li>
+<li>网关类型支持S3和DynamoDB，仅此两种。</li>
+</ol>
+<h2 id="Building-Solutions-across-VPCs-with-Peering"><a href="#Building-Solutions-across-VPCs-with-Peering" class="headerlink" title="Building Solutions across VPCs with Peering"></a>Building Solutions across VPCs with Peering</h2><p>多VPCs的互联问题：<br>VPC Peering：<br>允许使用私有IP地址将VPC互联<br>实例的行为会像他们在同一子网一样<br>甚至可以跨账户将VPC互联<br>星型配置。不可传递。<br>可以跨区域Region互联<br>如图，必须建立直连，不能传递。<br>VPC Peering 考点：<br>1 允许使用private IP把VPC互联<br>2 传递互联不支持，不行<br>3 可以跨区域互联<br>4 CIDR 地址不能重叠（合理，毕竟可以私有IP通信）</p>
+<h2 id="Network-Privacy-with-AWS-PrivateLink"><a href="#Network-Privacy-with-AWS-PrivateLink" class="headerlink" title="Network Privacy with AWS PrivateLink"></a>Network Privacy with AWS PrivateLink</h2><p>PrivateLink考点：<br>当有Peering VPC到数十个，上百个甚至上千个用户VPC的时候，考虑PrivateLink。<br>PrivateLink不需要VPC Peering，不需要路由表，不需要NAT网关，不需要互联网网关等等。<br>需要服务端VPC开启网络负载均衡器，需要客户端开启ENI弹性网络接口。<br>它区别与VPC Peering，它不会暴露整个VPC里的所有服务，应该是只会暴露需要的服务。<br>与互联网开放的区别是更安全，更好管理。</p>
+<h2 id="Securing-Your-Network-with-VPN-CloudHub"><a href="#Securing-Your-Network-with-VPN-CloudHub" class="headerlink" title="Securing Your Network with VPN CloudHub"></a>Securing Your Network with VPN CloudHub</h2><p>AWS VPN CloudHub<br>如果有多个网站，每个网站有自己的VPN连接，可以使用AWS VPN CloudHub把这些site连接到一起。类似于VPC Peering，工作模式成为hub and spoke模型。<br>它低费率，易管理。尽管是在互联网上操作的，但是全程加密。<br>考试看到多个VPN相关的，考虑这个。</p>
+<h2 id="Connecting-on-Premise-with-Direct-Connect"><a href="#Connecting-on-Premise-with-Direct-Connect" class="headerlink" title="Connecting on Premise with Direct Connect"></a>Connecting on Premise with Direct Connect</h2><p>VPN vs Direct Connect：<br>VPC也是私密通信。但是VPC traverse（遍历，横过）公网。VPC安全但是也很痛苦。<br>Direct Connect相比之下更加：<br>快，安全，可靠，可以支持很大很大的吞吐量<br>Direct Connect 考点：<br>把公司数据中心和AWS直接连接起来<br>很有用在高throughput workload的情况<br>想建立稳定可靠的安全传输，选它</p>
+<h2 id="Simplifying-Networks-with-Transit-Gateway"><a href="#Simplifying-Networks-with-Transit-Gateway" class="headerlink" title="Simplifying Networks with Transit Gateway"></a>Simplifying Networks with Transit Gateway</h2><p>Transit Gateway考点：<br>类似于VPC Peering，也是hub and spoke（辐）结构<br>它作为一个中心，可以简化VPC之间连接的拓扑结构<br>支持Direct Connect和VPN<br>AWS服务中唯一支持多播的服务<br>可以使用路由表来控制VPC之间的路由关系</p>
+<h2 id="5G-Networking-with-AWS-Wavelength"><a href="#5G-Networking-with-AWS-Wavelength" class="headerlink" title="5G Networking with AWS Wavelength"></a>5G Networking with AWS Wavelength</h2><p>AWS Wavelength:<br>暂时还没出现在考试中。<br>如过看到5G，超低延迟，边缘计算等字样，考虑AWS Wavelength</p>
+<h2 id="VPC-Networking-Exam-Tips"><a href="#VPC-Networking-Exam-Tips" class="headerlink" title="VPC Networking Exam Tips"></a>VPC Networking Exam Tips</h2><p>考点：高可用NAT<br>当资源分布在多个AZ中时，NAT Gateway所在AZ如果down了，那其他AZ中的资源就无法访问网络了。<br>解决方案是在每个AZ中配置NAT Gateway，保证每个AZ中的资源使用同一个AZ中的NAT Gateway。<br>考点：<br>安全组是stateful的。让进则让出，无视出站；反之亦然。<br>考点：<br>IP黑名单通过Network ACL实现<br>考点：<br>VPC Endpoint保证你在AWS内部将服务互联。分为Interface和Gateway，其中Gateway只支持S3和DynamoDB这两个，原因是他俩是公网IP地址。Interface支持其他使用私有IP地服务。<br>考点：<br>PrivateLink是用来peering成百上千VPC的。它不需要VPC Peering&#x2F;Route Table&#x2F;NAT Gateway&#x2F;Internet Gateway，都不要。<br>它只要服务端的Network 负载均衡，以及客户端的ENI 弹性网络接口。<br>考点：<br>Transit Gateway。它是星型结构，用来把VPC，Direct Connect还有VPN都连接到一个点上，方便管理。支持多播。<br>考点：<br>VPN Hub，集中式管理所有VPN连接，方便VPN连接之间互联。</p>
+<h1 id="Route-53"><a href="#Route-53" class="headerlink" title="Route 53"></a>Route 53</h1><h2 id="Route-53-Overview"><a href="#Route-53-Overview" class="headerlink" title="Route 53 Overview"></a>Route 53 Overview</h2><p>DNS是什么？<br>IPv4 vs IPv6<br>顶级域名<br>域名注册商<br>常用DNS记录类型<br>TTL是什么？<br>别名记录<br>路由策略<br>考点<br>DNS是什么呢？DNA就是把人类友好的字符串域名映射到IP地址的服务。<br>Top-Level Domain<br>顶级域名，指的是域名最后一个单词，像是com，cn，edu等等。<br>5个常用的域名注册商<br>domain.com<br>GoDaddy<br>Hoover<br>AWS<br>Namecheap<br>NS记录，Name Server记录，是当域名需要使用自己的DNS服务器来解析的时候，可以使用NS记录，将该域名指向自己的服务器。<br>图中示例，域名-顶级域名-NS记录-SOA</p>
+<p>A记录:<br>域名翻译成IP地址<br>TTL:<br>Time to live. TTL越短,DNS刷新的就越频繁.<br>Canonical是一个词汇，可以用作形容词或名词。作为形容词，它表示“标准的”、“典范的”或“正式的”，通常用于描述某个特定领域中的标准或规范。作为名词，Canonical通常指代Linux发行版Ubuntu的公司Canonical Ltd。</p>
+<p>例如，我们可以说：“这个网站提供了一个Canonical的定义”，这意味着这个网站提供了一个关于某个领域中的标准或规范的定义。又如：“Canonical公司是Ubuntu的开发商”，这意味着Canonical是Ubuntu的背后公司。<br>CNAME<br>Canonical Name<br>标准、典范名称<br>CNAME是用来从一个域名映射到另一个域名的。<br>Alias Record是AWS Route 53服务中的一种记录类型，因此它是AWS特有的。<br>与CNAME的区别在于Alias Records不走公网，所以对于AWS服务来说性能更好，更可靠。<br>而且Alias可以映射ip和域名，相当于结合了A记录和CNAME。</p>
+<h2 id="Demo-Using-a-Simple-Routing-Policy"><a href="#Demo-Using-a-Simple-Routing-Policy" class="headerlink" title="Demo: Using a Simple Routing Policy"></a>Demo: Using a Simple Routing Policy</h2><p>Simple Routing Policy，配置多个IP则随机分配</p>
+<h2 id="Demo-Using-a-Weighted-Routing-Policy"><a href="#Demo-Using-a-Weighted-Routing-Policy" class="headerlink" title="Demo: Using a Weighted Routing Policy"></a>Demo: Using a Weighted Routing Policy</h2><p>考点：<br>权重路由策略，可以设置权重<br>health check，可以检查每个记录的健康状态，如果fail则临时移除。可以设置SNS服务来提示fail的情况。</p>
+<h2 id="Demo-Using-a-Failover-Routing-Policy"><a href="#Demo-Using-a-Failover-Routing-Policy" class="headerlink" title="Demo: Using a Failover Routing Policy"></a>Demo: Using a Failover Routing Policy</h2><p>在AWS EC2中的WebDMZ中，DMZ通常指的是Demilitarized Zone，即非军事区，是一种网络安全架构设计模式，用于在互联网和内部网络之间创建一道安全屏障，以保护内部网络中的敏感资源不受外部网络的攻击或入侵。在WebDMZ中，DMZ通常用于部署Web服务器，以便在互联网上提供服务，同时保护内部网络中的其他资源。<br>考点：<br>Failover Routing Policy：<br>涉及到Active和Passive，考虑failover。</p>
+<h2 id="Demo-Using-a-Geolocation-Routing-Policy"><a href="#Demo-Using-a-Geolocation-Routing-Policy" class="headerlink" title="Demo: Using a Geolocation Routing Policy"></a>Demo: Using a Geolocation Routing Policy</h2><p>考点<br>Geolocation Routing Policy：<br>重点，当看到基于用户地理位置，考虑到本地化或者监管需求，但是与访问的延迟无关的情况，考虑这个。</p>
+<h2 id="Demo-Using-a-Geoproximity-Routing-Policy"><a href="#Demo-Using-a-Geoproximity-Routing-Policy" class="headerlink" title="Demo: Using a Geoproximity Routing Policy"></a>Demo: Using a Geoproximity Routing Policy</h2><p>复杂，不常用的考点：<br>Geoproximity Routing Policy<br>基于用户位置和资源的地理位置。可以选择基于bias设置路由。必须基于Route 53 traffic flow来设置geoproximity routing。</p>
+<h2 id="Demo-Using-a-Latency-Routing-Policy"><a href="#Demo-Using-a-Latency-Routing-Policy" class="headerlink" title="Demo: Using a Latency Routing Policy"></a>Demo: Using a Latency Routing Policy</h2><p>考点：<br>Latency Routing Policy<br>基于延迟的路由策略。<br>那就是哪儿延迟低就路由到哪里。</p>
+<h2 id="Demo-Using-a-Multivalue-Answer-Routing-Policy"><a href="#Demo-Using-a-Multivalue-Answer-Routing-Policy" class="headerlink" title="Demo: Using a Multivalue Answer Routing Policy"></a>Demo: Using a Multivalue Answer Routing Policy</h2><p>Multivalue Answer Routing<br>多值路由<br>本质上是Simple Routing Policy加上了HC。分开写。</p>
+<h1 id="Elastic-Load-Balancing-ELB"><a href="#Elastic-Load-Balancing-ELB" class="headerlink" title="Elastic Load Balancing (ELB)"></a>Elastic Load Balancing (ELB)</h1><h2 id="ELB-Overview"><a href="#ELB-Overview" class="headerlink" title="ELB Overview"></a>ELB Overview</h2><p>ELB概述<br>3种LB：<br>Application LB<br>Network LB<br>Classic LB</p>
+<h2 id="Using-Application-Load-Balancers"><a href="#Using-Application-Load-Balancers" class="headerlink" title="Using Application Load Balancers"></a>Using Application Load Balancers</h2><p>Applicaton LB：<br>包含以下内容：<br>Listener：检查客户端请求状态<br>Rules，rule包含优先级，一个及以上的action和condition<br>Target Groups，路由的目标，每个TG要配置上HC；<br>Limitations，只支持HTTP和HTTPS<br>HTTPS</p>
+<p>Network LB：<br>1 Layer4<br>2 机制性能<br>3 ALB不支持的协议，来NLB<br>4 NLB能解密流量，但是需要配置证书</p>
+<p>Classic LB：<br>504意味着超时，考虑DB或者实例。<br>需要用户的IPv4地址的时候，可以使用X-Forwarded-For头<br>粘性session<br>Sticky Session可以保证用户持续的访问同一台EC2实例。<br>场景题目，当EC2实例down了，LB依然把流量转发到该EC2<br>解决上面的问题考虑disable SS。</p>
+<p>ALB也可以开启Sticky Session，但是只能是TG层面的。</p>
+<p>Deregistration Delay<br>注销延迟<br>打开注销延迟：保持连接，当EC2不healthy<br>关闭注销延迟：当你希望LB立即关闭连接到不健康实例，就关闭注销延迟。</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Elastic-Block-Storage-EBS-and-Elastic-File-System-EFS"><span class="toc-text">Elastic Block Storage (EBS) and Elastic File System (EFS)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EBS-Overview"><span class="toc-text">EBS Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Volumes-and-Snapshots"><span class="toc-text">Volumes and Snapshots</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protecting-EBS-Volumes-with-Encryption"><span class="toc-text">Protecting EBS Volumes with Encryption</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Hibernation"><span class="toc-text">EC2 Hibernation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EFS-Overview"><span class="toc-text">EFS Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FSx-Overview"><span class="toc-text">FSx Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Amazon-Machine-Images-EBS-vs-Instance-Store"><span class="toc-text">Amazon Machine Images: EBS vs. Instance Store</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-Backup"><span class="toc-text">AWS Backup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EBS-Exam-Tips"><span class="toc-text">EBS Exam Tips</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Databases"><span class="toc-text">Databases</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Relational-Database-Service-RDS-Overview"><span class="toc-text">Relational Database Service (RDS) Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Increasing-Read-Performance-with-Read-Replicas"><span class="toc-text">Increasing Read Performance with Read Replicas</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-Amazon-Aurora"><span class="toc-text">What Is Amazon Aurora?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DynamoDB-Overview"><span class="toc-text">DynamoDB Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#When-Do-We-Use-DynamoDB-Transactions"><span class="toc-text">When Do We Use DynamoDB Transactions?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Saving-Your-Data-with-DynamoDB-Backups"><span class="toc-text">Saving Your Data with DynamoDB Backups</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Virtual-Private-Cloud-VPC-Networking"><span class="toc-text">Virtual Private Cloud (VPC) Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VPC-Overview"><span class="toc-text">VPC Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Provisioning-a-VPC-Part-1"><span class="toc-text">Demo: Provisioning a VPC - Part 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Provisioning-a-VPC-Part-2"><span class="toc-text">Demo: Provisioning a VPC - Part 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-NAT-Gateways-for-Internet-Access"><span class="toc-text">Using NAT Gateways for Internet Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protecting-Your-Resources-with-Security-Groups"><span class="toc-text">Protecting Your Resources with Security Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controlling-Subnet-Traffic-with-Network-ACLs"><span class="toc-text">Controlling Subnet Traffic with Network ACLs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Private-Communication-Using-VPC-Endpoints"><span class="toc-text">Private Communication Using VPC Endpoints</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Building-Solutions-across-VPCs-with-Peering"><span class="toc-text">Building Solutions across VPCs with Peering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Privacy-with-AWS-PrivateLink"><span class="toc-text">Network Privacy with AWS PrivateLink</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Securing-Your-Network-with-VPN-CloudHub"><span class="toc-text">Securing Your Network with VPN CloudHub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connecting-on-Premise-with-Direct-Connect"><span class="toc-text">Connecting on Premise with Direct Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simplifying-Networks-with-Transit-Gateway"><span class="toc-text">Simplifying Networks with Transit Gateway</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5G-Networking-with-AWS-Wavelength"><span class="toc-text">5G Networking with AWS Wavelength</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VPC-Networking-Exam-Tips"><span class="toc-text">VPC Networking Exam Tips</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Route-53"><span class="toc-text">Route 53</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Route-53-Overview"><span class="toc-text">Route 53 Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Simple-Routing-Policy"><span class="toc-text">Demo: Using a Simple Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Weighted-Routing-Policy"><span class="toc-text">Demo: Using a Weighted Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Failover-Routing-Policy"><span class="toc-text">Demo: Using a Failover Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Geolocation-Routing-Policy"><span class="toc-text">Demo: Using a Geolocation Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Geoproximity-Routing-Policy"><span class="toc-text">Demo: Using a Geoproximity Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Latency-Routing-Policy"><span class="toc-text">Demo: Using a Latency Routing Policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo-Using-a-Multivalue-Answer-Routing-Policy"><span class="toc-text">Demo: Using a Multivalue Answer Routing Policy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Elastic-Load-Balancing-ELB"><span class="toc-text">Elastic Load Balancing (ELB)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ELB-Overview"><span class="toc-text">ELB Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Application-Load-Balancers"><span class="toc-text">Using Application Load Balancers</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://xqtony.github.io/2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part2/">https://xqtony.github.io/2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part2/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AWS/" rel="tag">AWS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud/" rel="tag">Cloud</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" rel="tag">云技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2023/05/28/kafka/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          Kafka初探
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part1%20copy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          AWS Certified Solution Architect Associate SAA-C03 笔记 (一)
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+  <div id="comments"><div id="SOHUCS" sid="2023/06/27/AWS Certified Solution Architect Associate SAA-C03 part2/"></div></div>
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part1%20copy/">AWS Certified Solution Architect Associate SAA-C03 笔记 (一)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/06/27/AWS%20Certified%20Solution%20Architect%20Associate%20SAA-C03%20part2/">AWS Certified Solution Architect Associate SAA-C03 笔记 (二)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/kafka/">Kafka初探</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/todo/">目标</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/28/ssh%20git%20config/">简单记录下GitHub SSH访问的配置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" style="font-size: 20px;">AI辅助创作</a> <a href="/tags/AWS/" style="font-size: 13.33px;">AWS</a> <a href="/tags/Arrays/" style="font-size: 10px;">Arrays</a> <a href="/tags/BigDecimal/" style="font-size: 10px;">BigDecimal</a> <a href="/tags/Cloud/" style="font-size: 13.33px;">Cloud</a> <a href="/tags/Collections/" style="font-size: 13.33px;">Collections</a> <a href="/tags/Comparable/" style="font-size: 10px;">Comparable</a> <a href="/tags/Comparator/" style="font-size: 16.67px;">Comparator</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/Lambda/" style="font-size: 10px;">Lambda</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/compare/" style="font-size: 16.67px;">compare</a> <a href="/tags/compareTo/" style="font-size: 13.33px;">compareTo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/%E4%BA%8C%E5%88%9B/" style="font-size: 16.67px;">二创</a> <a href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" style="font-size: 13.33px;">云技术</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 20px;">原创</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AWS/">AWS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7%E5%92%8C%E7%B1%BB%E5%BA%93/">Java高级特性和类库</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AWS/" rel="tag">AWS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arrays/" rel="tag">Arrays</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigDecimal/" rel="tag">BigDecimal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud/" rel="tag">Cloud</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Collections/" rel="tag">Collections</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparable/" rel="tag">Comparable</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Comparator/" rel="tag">Comparator</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kafka/" rel="tag">Kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lambda/" rel="tag">Lambda</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zookeeper/" rel="tag">Zookeeper</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compare/" rel="tag">compare</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/compareTo/" rel="tag">compareTo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reverse/" rel="tag">reverse</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sort/" rel="tag">sort</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/" rel="tag">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%8C%E5%88%9B/" rel="tag">二创</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%91%E6%8A%80%E6%9C%AF/" rel="tag">云技术</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.r2coding.com/">Road 2 Coding</a>
+        </li>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="http://www.ityouknow.com/">分享技术，品味人生</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 Tony Kong.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <script>
+      window._config = { showScore: true };
+      (function(){
+        var appid = 'cywH6FxXr';
+        var conf = '0e148934918dc59f570bbb420fa4f089';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        var nodes =document.getElementsByTagName("head")[0]||document.head||document.documentElement;
+        if (/(Android|iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent) && width < 750) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+        }
+        else {
+          var loadJs=function(d,a){
+            var b=document.createElement("script");b.setAttribute("type","text/javascript");
+            b.setAttribute("charset","UTF-8");
+            b.setAttribute("src",d);
+            if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}
+            nodes.appendChild(b)
+          };
+          loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})});
+        }
+        var loadCss = function(cssString){
+          var style=document.createElement("style");
+          style.setAttribute("type", "text/css");
+          if(style.styleSheet){// IE
+              style.styleSheet.cssText = cssString;
+          } else {// w3c
+              var cssText = document.createTextNode(cssString);
+              style.appendChild(cssText);
+          }
+          nodes.appendChild(style);
+        }
+      })();
+      function removeElement(_element){
+          var _parentElement = _element.parentNode;
+          if(_parentElement){
+                  _parentElement.removeChild(_element);
+          }
+      }
+      var removeAD = document.createElement("div");
+      removeAD.id = 'removeAD';
+      var adInterval1 = setInterval(function() {
+        if(document.querySelector("#feedAv")){
+          document.querySelector("[node-type=cmt-list]").appendChild(removeAD);
+          document.querySelector("#removeAD").appendChild(document.querySelector("#feedAv"));
+          //- removeElement(document.querySelectorAll("#feedAv")[0]);
+          var feedAv = document.querySelector("#feedAv").children;
+          for( item of feedAv){
+            item.style.display = 'none'
+          }
+          document.querySelector("#removeAD").style.display="none"
+          clearInterval(adInterval1);
+        }
+      },1000);
+      var adInterval2 = setInterval(function() {
+        if(document.querySelector("#pop_ad")){
+          removeElement(document.querySelector("#pop_ad"));
+          clearInterval(adInterval2);
+        }
+      }, 1000);
+    </script>
+    
+<script src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+
+  
+  
+
+
+
+
+
+</body>
+</html>
