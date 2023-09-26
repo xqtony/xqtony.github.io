@@ -6,7 +6,7 @@
   <link href="https://xqtony.github.io/atom.xml" rel="self"/>
   
   <link href="https://xqtony.github.io/"/>
-  <updated>2023-06-26T16:54:32.697Z</updated>
+  <updated>2023-09-26T14:38:45.606Z</updated>
   <id>https://xqtony.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>经验贴：Spring Bean的scope你真的会用吗？</title>
+    <link href="https://xqtony.github.io/2023/09/26/spring-bean-prototype-issue/"/>
+    <id>https://xqtony.github.io/2023/09/26/spring-bean-prototype-issue/</id>
+    <published>2023-09-26T12:18:00.661Z</published>
+    <updated>2023-09-26T14:38:45.606Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们知道Spring中的Bean默认都是单例的，也就是singleton。另外一个常用的是prototype（原型），可以通过它实现多例模式。但是请问，直接使用@Scope注解加上prototype直接就能实现多例吗？参考下面的代码：</p><span id="more"></span><p>MyService Bean:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope(value=&quot;prototype&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService</span></span><br></pre></td></tr></table></figure><p>MyController Bean:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(/rest)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyController</span> &#123;</span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MyService service;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> num=<span class="number">0</span>;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;scope1&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testScope1</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;num:&quot;</span>+ ++num +<span class="string">&quot;次请求,&quot;</span>+ service);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上面定义了两个Bean，一个是服务，一个是控制器。我们把服务通过自动注入的方式注入控制器。</p><p>请问上面的实现方式可以确保实现多例模式吗？</p><p>有的朋友可能认为，我已经使用了<code>@Scope(value=&quot;prototype&quot;)</code>，理当直接就是多例模式，每次访问&#x2F;rest&#x2F;me API的时候都能创建新的Bean，打印不同的结果。但是事实真的如此吗？</p><p>实际上看到的输出是：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">num:1次请求,com.xqtony.bean.scope.prototype.service.MyService@6bc394d2</span><br><span class="line">num:2次请求,com.xqtony.bean.scope.prototype.service.MyService@6bc394d2</span><br></pre></td></tr></table></figure><p>实际上，并没有实现多例！我们的运行结果会发现，两次请求打印出来的结果是一样的。原因是什么？是因为我们没有指定ScopeProxyMode。</p><p>ScopeProxyMode的值有: Default, NO, TARGET_CLASS, INTERFACE。</p><p>如果希望在这个例子中实现多例，必须加上<code>ScopeProxyMode.TARGET_CLASS</code>。</p><p>MyService Bean:</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope(value=&quot;prototype&quot;, proxyMode=ScopedProxyMode.TARGET_CLASS)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyService2</span></span><br></pre></td></tr></table></figure><p>这时候会发现，service2和service一个是新创建了对象，另一个没有。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num:0次请求, service没加  ScopeProxyModecom.xqtony.bean.scope.prototype.service.MyService@2a80117c</span><br><span class="line">num:0次请求, service加了 ScopeProxyMode.TARGET_CLASScom.xqtony.bean.scope.prototype.service.MyService2@203f807a</span><br><span class="line">num:1次请求, service没加  ScopeProxyModecom.xqtony.bean.scope.prototype.service.MyService@2a80117c</span><br><span class="line">num:1次请求, service加了 ScopeProxyMode.TARGET_CLASScom.xqtony.bean.scope.prototype.service.MyService2@391e383e</span><br></pre></td></tr></table></figure><p>为什么我们知道要使用<code>TARGET_CLASS</code>呢？因为proxyMode的默认值是Default，而在源码中是这样描述的：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Default typically equals &#123;<span class="doctag">@link</span> #NO&#125;, unless a different default</span></span><br><span class="line"><span class="comment"> * has been configured at the component-scan instruction level.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">DEFAULT,</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Do not create a scoped proxy.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;This proxy-mode is not typically useful when used with a</span></span><br><span class="line"><span class="comment"> * non-singleton scoped instance, which should favor the use of the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> #INTERFACES&#125; or &#123;<span class="doctag">@link</span> #TARGET_CLASS&#125; proxy-modes instead if it</span></span><br><span class="line"><span class="comment"> * is to be used as a dependency.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">NO,</span><br></pre></td></tr></table></figure><p>可见在使用Prototype（原型）的时候，是不应该使用DEFAULT的。</p><p>完整的项目代码请参考我的代码仓库：</p><p><a href="https://github.com/xqtony/spring-scope-prototype">Github项目地址</a></p><p>参考：<br><a href="https://blog.csdn.net/qq_39404258/article/details/109076346">springboot中怎么获取多例（prototype）</a><br><a href="https://zhuanlan.zhihu.com/p/27971569">spring的scope为prototype的bean的正确使用方法</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;我们知道Spring中的Bean默认都是单例的，也就是singleton。另外一个常用的是prototype（原型），可以通过它实现多例模式。但是请问，直接使用@Scope注解加上prototype直接就能实现多例吗？参考下面的代码：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="实战经验" scheme="https://xqtony.github.io/categories/%E5%AE%9E%E6%88%98%E7%BB%8F%E9%AA%8C/"/>
+    
+    
+    <category term="Spring" scheme="https://xqtony.github.io/tags/Spring/"/>
+    
+    <category term="Spring Boot" scheme="https://xqtony.github.io/tags/Spring-Boot/"/>
+    
+    <category term="Spring Bean" scheme="https://xqtony.github.io/tags/Spring-Bean/"/>
+    
+    <category term="Prototype" scheme="https://xqtony.github.io/tags/Prototype/"/>
+    
+  </entry>
   
   <entry>
     <title>AWS Certified Solution Architect Associate SAA-C03 笔记 (一)</title>
