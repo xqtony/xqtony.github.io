@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   
   
-  <title>category: 实战经验 | 托尼的技术博客</title>
+  <title>翻转二叉树 | 托尼的技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
   
@@ -80,35 +80,157 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-
-  
-  
+        <section id="main"><article id="post-226 翻转二叉树" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
     
     
-    <section class="archives-wrap">
-      <div class="archive-title">
+      <header class="article-header">
         
-          <i class="fa fa-classify"></i>
-          实战经验
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      翻转二叉树
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2024-12-13T11:53:47.205Z" itemprop="datePublished">12/13/2024</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2024/12/13/226%20%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+      <i id="changyan_count_unit" data-xid="/2024/12/13/226%20%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91/"></i>
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="翻转二叉树的实现方法全解析"><a href="#翻转二叉树的实现方法全解析" class="headerlink" title="翻转二叉树的实现方法全解析"></a>翻转二叉树的实现方法全解析</h1><p>在二叉树的操作中，翻转二叉树是一个经典的问题。本文将详细介绍翻转二叉树的实现方法，包括递归方法以及其他可能的方法。</p>
+<span id="more"></span>
+
+<h2 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h2><p>给定一个二叉树，将其每个节点的左右子树进行交换，从而翻转整个二叉树。例如，原始二叉树为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     4</span><br><span class="line">   /   \</span><br><span class="line">  2     7</span><br><span class="line"> / \   / \</span><br><span class="line">1   3 6   9</span><br></pre></td></tr></table></figure>
+
+<p>翻转后的二叉树应该是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     4</span><br><span class="line">   /   \</span><br><span class="line">  7     2</span><br><span class="line"> / \   / \</span><br><span class="line">9   6 3   1</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、递归实现方法"><a href="#二、递归实现方法" class="headerlink" title="二、递归实现方法"></a>二、递归实现方法</h2><p>以下是使用递归方式实现翻转二叉树的代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">invertTree</span><span class="params">(root *TreeNode)</span></span> *TreeNode &#123;</span><br><span class="line">    <span class="comment">// 如果根节点为空，直接返回空</span></span><br><span class="line">    <span class="keyword">if</span> (root == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 递归翻转左子树</span></span><br><span class="line">    invertTree(root.Left)</span><br><span class="line">    <span class="comment">// 递归翻转右子树</span></span><br><span class="line">    invertTree(root.Right)</span><br><span class="line">    <span class="comment">// 交换左右子树</span></span><br><span class="line">    l := root.Left</span><br><span class="line">    root.Left = root.Right</span><br><span class="line">    root.Right = l </span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，首先对根节点进行判断，如果为空则直接返回。然后递归地对左子树和右子树进行翻转操作，这是递归的核心部分。最后交换根节点的左右子树，完成整棵树的翻转。递归的思想在于将大问题逐步分解为相同结构的小问题，这里就是将整棵树的翻转分解为每个子树的翻转，直到子树为空。</p>
+<h2 id="三、非递归实现方法（使用栈）"><a href="#三、非递归实现方法（使用栈）" class="headerlink" title="三、非递归实现方法（使用栈）"></a>三、非递归实现方法（使用栈）</h2><p>除了递归方法，还可以使用栈来实现二叉树的翻转。思路是先将根节点入栈，然后循环取出栈顶节点，交换其左右子树，并将其非空的左右子树依次入栈，直到栈为空。</p>
+<p>以下是使用栈实现的代码示例：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">invertTree</span><span class="params">(root *TreeNode)</span></span> *TreeNode &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    stack := []*TreeNode&#123;root&#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(stack) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        node := stack[<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        stack = stack[:<span class="built_in">len</span>(stack)<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">if</span> node.Left!= <span class="literal">nil</span> &#123;</span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Right!= <span class="literal">nil</span> &#123;</span><br><span class="line">            stack = <span class="built_in">append</span>(stack, node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 交换左右子树</span></span><br><span class="line">        node.Left, node.Right = node.Right, node.Left</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种非递归的方法利用了栈的后进先出特性，模拟了递归的过程，避免了递归可能带来的栈溢出风险，尤其适用于二叉树深度较大的情况。</p>
+<h2 id="四、非递归实现方法（使用队列）"><a href="#四、非递归实现方法（使用队列）" class="headerlink" title="四、非递归实现方法（使用队列）"></a>四、非递归实现方法（使用队列）</h2><p>类似地，也可以使用队列来实现。将根节点入队，然后循环取出队首节点，交换其左右子树，并将其非空的左右子树依次入队，直到队列为空。</p>
+<p>代码如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">invertTree</span><span class="params">(root *TreeNode)</span></span> *TreeNode &#123;</span><br><span class="line">    <span class="keyword">if</span> root == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">    queue := []*TreeNode&#123;root&#125;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">len</span>(queue) &gt; <span class="number">0</span> &#123;</span><br><span class="line">        node := queue[<span class="number">0</span>]</span><br><span class="line">        queue = queue[<span class="number">1</span>:]</span><br><span class="line">        <span class="keyword">if</span> node.Left!= <span class="literal">nil</span> &#123;</span><br><span class="line">            queue = <span class="built_in">append</span>(queue, node.Left)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> node.Right!= <span class="literal">nil</span> &#123;</span><br><span class="line">            queue = <span class="built_in">append</span>(queue, node.Right)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 交换左右子树</span></span><br><span class="line">        node.Left, node.Right = node.Right, node.Left</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用队列的方法与使用栈的方法在思路上较为相似，只是数据结构的操作特性不同，队列是先进先出，而栈是后进先出。</p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>翻转二叉树是二叉树操作中的一个基础且重要的问题。递归方法简洁直观，能够很好地体现递归的思想，但可能在树深度较大时存在栈溢出风险。而非递归的栈和队列方法则可以在一定程度上避免这种风险，并且在处理大规模数据时可能具有更好的性能表现。在实际应用中，可以根据二叉树的规模和具体场景选择合适的实现方法。希望通过本文的介绍，读者能够深入理解翻转二叉树的多种实现方式，并能够在实际编程中灵活运用。 </p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BF%BB%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E5%85%A8%E8%A7%A3%E6%9E%90"><span class="toc-text">翻转二叉树的实现方法全解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-text">一、问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-text">二、递归实现方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%BF%E7%94%A8%E6%A0%88%EF%BC%89"><span class="toc-text">三、非递归实现方法（使用栈）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%9D%9E%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%BF%E7%94%A8%E9%98%9F%E5%88%97%EF%BC%89"><span class="toc-text">四、非递归实现方法（使用队列）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">五、总结</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="https://xqtony.github.io/2024/12/13/226 翻转二叉树/">https://xqtony.github.io/2024/12/13/226 翻转二叉树/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%BE%85%E5%8A%A9%E5%88%9B%E4%BD%9C/" rel="tag">AI辅助创作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/" rel="tag">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2024/12/10/104%20%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          二叉树的最大深度
         
       </div>
-      <div class="archives">
-  
-  <ul class="archive-article archive-type-post">
-  <li class="archive-article-inner">
-    <a href="/2023/09/26/spring-bean-prototype-issue/">
-      <time class="dt-published" datetime="2023-09-26T12:18:00.661Z" itemprop="datePublished">09/26/2023</time>
-      | <span class="archive-article-title">经验贴：Spring Bean的scope你真的会用吗？</span>
     </a>
-  </li>
-</ul>
+  
+  
+</nav>
+
+      
+      
+        
 
 
 
-  </div></section>
 
 
+
+
+  <div id="comments"><div id="SOHUCS" sid="2024/12/13/226 翻转二叉树/"></div></div>
+
+
+      
+    </footer>
+  </div>
+</article>
 </section>
         
           <aside id="sidebar">
@@ -262,6 +384,16 @@
 
 
 
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
 
 
 
